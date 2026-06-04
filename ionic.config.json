@@ -1,0 +1,7 @@
+{
+  "name": "verdevegan",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

@@ -1,0 +1,105 @@
+<ion-content [fullscreen]="true" class="carrinho-content">
+
+  <div class="carrinho-container">
+
+    <div class="top-area">
+
+      <h1>
+        Verde<span>Vegan</span>
+      </h1>
+
+    </div>
+
+    <div class="card-carrinho">
+
+      <div class="header-carrinho">
+
+        <ion-icon
+          name="arrow-back-outline"
+          class="back-icon"
+          (click)="fechar()">
+        </ion-icon>
+
+        <h2>CARRINHO</h2>
+
+      </div>
+
+      <div class="produto-carrinho" 
+      *ngFor="let item of carrinho; let i = index">
+
+        <img [src]="item.imagem">
+
+        <div class="info-produto">
+
+          <h3>{{ item.nome }}</h3>
+
+          <div
+            class="ingredientes-removidos"
+            *ngIf="item.ingredientesRemovidos?.length">
+
+            <p *ngFor="let ingrediente of item.ingredientesRemovidos">
+              Sem {{ ingrediente }}
+            </p>
+
+          </div>
+
+          <div class="preco-qtd">
+
+            <div class="valor">
+              {{ item.preco }}
+            </div>
+
+            <div class="quantidade-box">
+
+              <button
+                class="btn-qtd"
+                (click)="diminuirQuantidade(i)">
+                -
+              </button>
+
+              <span>{{ item.quantidade }}</span>
+
+              <button
+                class="btn-qtd"
+                (click)="aumentarQuantidade(i)">
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <button
+        class="btn-limpar"
+        *ngIf="carrinho.length > 0"
+        (click)="limparCarrinho()">
+        Limpar carrinho
+      </button>
+
+      <div class="total">
+
+        <span>TOTAL:</span>
+
+        <span class="valor-total">
+          {{ total.toFixed(2) }}€
+        </span>
+
+      </div>
+
+      <button class="btn-preto" (click)="adicionarPrato()">
+        Adicionar prato
+      </button>
+
+      <button class="btn-preto" (click)="irPagamento()">
+        Comprar
+      </button>
+
+    </div>
+
+  </div>
+
+</ion-content>

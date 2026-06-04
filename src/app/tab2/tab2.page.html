@@ -1,0 +1,133 @@
+<ion-content [fullscreen]="true" class="pedidos-content">
+
+  <div class="pedidos-container">
+
+    <div class="top-area">
+      <h1>Verde<span>Vegan</span></h1>
+    </div>
+
+    <div class="card-pedidos">
+
+      <div class="header-pedidos">
+
+        <ion-icon
+          name="arrow-back-outline"
+          class="back-icon"
+          (click)="voltar()">
+        </ion-icon>
+
+        <h2>OS MEUS PEDIDOS</h2>
+
+      </div>
+
+      <div *ngIf="pedidosAtivos.length > 0">
+
+        <div class="pedido" *ngFor="let pedido of pedidosAtivos">
+
+          <div class="item-pedido" *ngFor="let item of pedido.itens">
+
+            <h3>{{ item.nome }}</h3>
+
+            <p class="quantidade">
+              {{ item.quantidade }} artigo(s)
+            </p>
+
+            <p class="preco-item">
+              {{ item.preco }}
+            </p>
+
+            <div
+              class="mudancas"
+              *ngIf="item.ingredientesRemovidos?.length > 0">
+
+              <p *ngFor="let ingrediente of item.ingredientesRemovidos">
+                Sem {{ ingrediente }}
+              </p>
+
+            </div>
+
+            <p
+              class="sem-mudancas"
+              *ngIf="!item.ingredientesRemovidos || item.ingredientesRemovidos.length === 0">
+              Sem mudanças
+            </p>
+
+          </div>
+
+          <div class="total-pedido">
+            TOTAL:
+            <span>{{ pedido.total.toFixed(2) }}€</span>
+          </div>
+
+          <p class="estado">{{ pedido.estado }}, 5 minutos de distância</p>
+
+          <button
+            class="btn-entregue"
+            (click)="marcarComoEntregue(pedido.id)">
+            Marcar como entregue
+          </button>
+
+        </div>
+
+      </div>
+
+      <div *ngIf="pedidosAtivos.length === 0" class="sem-pedidos">
+        Sem pedidos ativos
+      </div>
+
+      <h2 class="titulo-historico">Histórico de pedidos</h2>
+
+      <div *ngIf="historicoPedidos.length > 0">
+
+        <div class="pedido historico" *ngFor="let pedido of historicoPedidos">
+
+          <div class="item-pedido" *ngFor="let item of pedido.itens">
+
+            <h3>{{ item.nome }}</h3>
+
+            <p class="quantidade">
+              {{ item.quantidade }} artigo(s)
+            </p>
+
+            <p class="preco-item">
+              {{ item.preco }}
+            </p>
+
+            <div
+              class="mudancas"
+              *ngIf="item.ingredientesRemovidos?.length > 0">
+
+              <p *ngFor="let ingrediente of item.ingredientesRemovidos">
+                Sem {{ ingrediente }}
+              </p>
+
+            </div>
+
+            <p
+              class="sem-mudancas"
+              *ngIf="!item.ingredientesRemovidos || item.ingredientesRemovidos.length === 0">
+              Sem mudanças
+            </p>
+
+          </div>
+
+          <div class="total-pedido">
+            TOTAL:
+            <span>{{ pedido.total.toFixed(2) }}€</span>
+          </div>
+
+          <p class="estado entregue">Entregue</p>
+
+        </div>
+
+      </div>
+
+      <div *ngIf="historicoPedidos.length === 0" class="sem-historico">
+        Sem histórico de pedidos
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>
