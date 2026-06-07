@@ -1,0 +1,128 @@
+<ion-content [fullscreen]="true" class="pagamento-content">
+
+  <div class="pagamento-container">
+
+    <div class="top-area">
+      <h1>Verde<span>Vegan</span></h1>
+    </div>
+
+    <div class="card-pagamento">
+
+      <div class="header-pagamento">
+        <ion-icon
+          name="arrow-back-outline"
+          class="back-icon"
+          (click)="voltar()">
+        </ion-icon>
+
+        <h2>PAGAMENTO</h2>
+      </div>
+
+      <h3>Dados de Entrega</h3>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroNome }">
+        <input
+          type="text"
+          placeholder="Nome completo"
+          [(ngModel)]="nome">
+      </div>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroMorada }">
+        <input
+          type="text"
+          placeholder="Morada"
+          [(ngModel)]="morada">
+      </div>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroCodigoPostal }">
+        <input
+          type="text"
+          placeholder="Código Postal (ex: 1234-567)"
+          maxlength="8"
+          [(ngModel)]="codigoPostal">
+      </div>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroLocalidade }">
+        <input
+          type="text"
+          placeholder="Localidade"
+          [(ngModel)]="localidade">
+      </div>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroNif }">
+        <input
+          type="text"
+          placeholder="NIF (opcional)"
+          maxlength="9"
+          inputmode="numeric"
+          [(ngModel)]="nif">
+      </div>
+
+      <div class="icone-cartao">
+        <ion-icon name="card-outline"></ion-icon>
+      </div>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroNomeCartao }">
+        <input
+          type="text"
+          placeholder="Nome no cartão"
+          [(ngModel)]="nomeCartao">
+      </div>
+
+      <div class="input-box" [ngClass]="{ 'input-erro': erroNumeroCartao }">
+        <input
+          type="text"
+          placeholder="Número do cartão"
+          length="16"
+          maxlength="16"
+          inputmode="numeric"
+          [(ngModel)]="numeroCartao">
+      </div>
+
+      <div class="linha-cartao">
+        <select
+          class="campo-select"
+          [ngClass]="{ 'input-erro': erroValidade }"
+          [(ngModel)]="mes">
+          <option value="">Mês</option>
+          <option *ngFor="let m of meses" [value]="m">{{ m }}</option>
+        </select>
+
+        <select
+          class="campo-select"
+          [ngClass]="{ 'input-erro': erroValidade }"
+          [(ngModel)]="ano">
+          <option value="">Ano</option>
+          <option *ngFor="let a of anos" [value]="a">{{ a }}</option>
+        </select>
+
+        <div class="input-box cvv-box" [ngClass]="{ 'input-erro': erroCvv }">
+          <input
+            type="password"
+            placeholder="CVV"
+            maxlength="3"
+            inputmode="numeric"
+            [(ngModel)]="cvv">
+        </div>
+      </div>
+
+      <button class="btn-preto" (click)="finalizarPagamento()">
+        Finalizar pagamento
+      </button>
+
+    </div>
+
+  </div>
+    <div class="popup-backdrop" *ngIf="mostrarPopup">
+    <div class="popup-caixa" [ngClass]="tipoPopup">
+      <h2>{{ tipoPopup === 'sucesso' ? 'Sucesso' : 'Erro' }}</h2>
+
+      <p>{{ mensagemPopup }}</p>
+
+      <button class="popup-btn" (click)="fecharPopup()">
+        OK
+      </button>
+    </div>
+  </div>
+
+</ion-content>

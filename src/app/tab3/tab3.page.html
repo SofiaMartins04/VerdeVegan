@@ -1,0 +1,93 @@
+<ion-content [fullscreen]="true" class="pontos-content">
+
+  <div class="pontos-container">
+
+    <div class="top-area">
+      <h1>Verde<span>Vegan</span></h1>
+    </div>
+
+    <div class="card-pontos">
+
+      <div class="header-pontos">
+        <ion-icon
+          name="arrow-back-outline"
+          class="back-icon"
+          (click)="voltar()">
+        </ion-icon>
+        <h2>OS MEUS PONTOS</h2>
+      </div>
+
+      <div class="pontos-total">
+        {{ pontos }}
+      </div>
+
+      <p class="texto-pontos">
+        pontos acumulados
+      </p>
+
+      <h3>Como ganhar pontos</h3>
+
+      <div class="lista-pontos">
+        <p>🍽️ Refeição = 10 pontos</p>
+        <p>🥤 Bebida = 5 pontos</p>
+        <p>🍰 Sobremesa = 5 pontos</p>
+        <p>☕ Café = 2 pontos</p>
+      </div>
+
+      <h3>Recompensas</h3>
+
+      <div class="recompensas-grid">
+
+        <div
+          class="recompensa-card"
+          *ngFor="let recompensa of recompensas"
+          [class.disponivel]="pontos >= recompensa.custo"
+          (click)="pontos >= recompensa.custo && resgatarRecompensa(recompensa)">
+
+          <div class="recompensa-icon">
+            <span *ngIf="recompensa.tipo === 'cafe'">☕</span>
+            <span *ngIf="recompensa.tipo === 'bebida'">🥤</span>
+            <span *ngIf="recompensa.tipo === 'sobremesa'">🍰</span>
+            <span *ngIf="recompensa.tipo === 'refeicao'">🍽️</span>
+          </div>
+
+          <p>{{ recompensa.nome }}</p>
+          <strong>{{ recompensa.custo }} pts</strong>
+
+        </div>
+
+      </div>
+
+      <h3>Recompensas disponíveis</h3>
+
+      <div
+        class="recompensa-disponivel"
+        *ngFor="let recompensa of recompensasDisponiveis">
+
+        {{ recompensa.nome }}
+
+      </div>
+
+      <p
+        class="sem-recompensas"
+        *ngIf="recompensasDisponiveis.length === 0">
+        Sem recompensas disponíveis
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="popup-backdrop" *ngIf="mostrarPopup">
+    <div class="popup-caixa" [ngClass]="tipoPopup">
+      <h2>{{ tipoPopup === 'sucesso' ? 'Sucesso' : 'Erro' }}</h2>
+
+      <p>{{ mensagemPopup }}</p>
+
+      <button class="popup-btn" (click)="fecharPopup()">
+        OK
+      </button>
+    </div>
+  </div>
+
+</ion-content>

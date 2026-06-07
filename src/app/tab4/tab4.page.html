@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true" class="conta-content">
+
+  <div class="conta-container">
+
+    <div class="top-area">
+      <h1>Verde<span>Vegan</span></h1>
+    </div>
+
+    <div class="card-conta">
+
+      <div class="card-header">
+
+        <ion-icon
+          name="arrow-back-outline"
+          class="back-icon"
+          (click)="voltar()">
+        </ion-icon>
+        
+        <h2>OS MEUS DADOS</h2>
+      </div>
+
+      <div class="avatar" (click)="inputFoto.click()">
+
+        <img
+          *ngIf="fotoPerfil"
+          [src]="fotoPerfil"
+          alt="Foto de perfil"
+          class="foto-perfil"
+        />
+
+        <ion-icon
+          *ngIf="!fotoPerfil"
+          name="person-circle-outline">
+        </ion-icon>
+
+      </div>
+
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        #inputFoto
+        (change)="selecionarFoto($event)"
+      />
+
+      <p class="alterar-foto" (click)="inputFoto.click()">
+        Alterar foto
+      </p>
+
+      <h3>{{ utilizador.nome || 'Utilizador' }}</h3>
+
+      <p><strong>Email:</strong> {{ utilizador.email }}</p>
+      <p><strong>Contacto:</strong> {{ utilizador.contacto }}</p>
+      <p><strong>Morada:</strong> {{ utilizador.morada }}</p>
+
+      <div class="notificacoes">
+        <span>Receber notificações</span>
+        <input type="checkbox">
+      </div>
+
+      <button class="btn-sair" (click)="terminarSessao()">
+        Terminar sessão
+      </button>
+
+    </div>
+
+  </div>
+
+</ion-content>

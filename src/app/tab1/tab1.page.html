@@ -1,0 +1,75 @@
+<ion-content [fullscreen]="true" class="home-content">
+
+  <div class="home-container">
+
+    <div class="top-area">
+      <h1 (click)="limparFiltros()">
+        Verde<span>Vegan</span>
+      </h1>
+
+      <button class="cart-btn" (click)="abrirCarrinho()">
+        <ion-icon name="cart-outline"></ion-icon>
+
+        <span
+          class="cart-badge"
+          *ngIf="quantidadeCarrinho > 0">
+          {{ quantidadeCarrinho }}
+        </span>
+      </button>
+    </div>
+
+    <div class="search-box">
+      <ion-input
+        placeholder="Procure a sua refeição..."
+        [(ngModel)]="pesquisa">
+      </ion-input>
+      <ion-icon name="search-outline"></ion-icon>
+    </div>
+
+    <div class="categorias" *ngIf="pesquisa.trim() === ''">
+      <div class="categoria" [class.ativa]="categoriaSelecionada === 'fastfood'" (click)="selecionarCategoria('fastfood')">🥪</div>
+      <div class="categoria" [class.ativa]="categoriaSelecionada === 'pratos'" (click)="selecionarCategoria('pratos')">🍽️</div>
+      <div class="categoria" [class.ativa]="categoriaSelecionada === 'sobremesas'" (click)="selecionarCategoria('sobremesas')">🍨</div>
+      <div class="categoria" [class.ativa]="categoriaSelecionada === 'extras'" (click)="selecionarCategoria('extras')">🥤</div>
+
+    </div>
+
+    <div class="titulo-linha">
+      <h2>{{ tituloLista }}</h2>
+
+      <button
+        *ngIf="categoriaSelecionada || pesquisa"
+        class="btn-destaques"
+        (click)="limparFiltros()">
+        Ver destaques
+      </button>
+    </div>
+    
+    <div class="produtos-grid">
+
+      <div class="produto-card" *ngFor="let produto of produtosFiltrados"  (click)="abrirDetalhes(produto)">
+        <img [src]="produto.imagem" [alt]="produto.nome">
+
+        <h3>{{ produto.nome }}</h3>
+
+        <p class="tempo">
+          ⏱ Prep: {{ produto.tempo }}
+        </p>
+
+        <div class="rating-box">
+          <span class="stars">
+            {{ gerarEstrelas(produto.rating) }}
+          </span>
+          
+        </div>
+
+          <p class="preco">
+            {{ produto.preco }}
+          </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

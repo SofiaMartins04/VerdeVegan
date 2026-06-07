@@ -1,0 +1,197 @@
+<ion-content [fullscreen]="true" class="carrinho-content">
+
+  <div class="carrinho-container">
+
+    <div class="top-area">
+
+      <h1>
+        Verde<span>Vegan</span>
+      </h1>
+
+    </div>
+
+    <div class="card-carrinho">
+
+      <div class="header-carrinho">
+
+        <ion-icon
+          name="arrow-back-outline"
+          class="back-icon"
+          (click)="fechar()">
+        </ion-icon>
+
+        <h2>CARRINHO</h2>
+
+      </div>
+
+      <div class="produto-carrinho" 
+      *ngFor="let item of carrinho; let i = index">
+
+        <img [src]="item.imagem">
+
+        <div class="info-produto">
+
+          <h3>{{ item.nome }}</h3>
+
+          <div
+            *ngIf="item.recompensa"
+            class="recompensa-usada">
+
+            <button
+              class="btn-cancelar-recompensa"
+              (click)="cancelarRecompensa(i)">
+              Não usar
+            </button>
+
+          </div>
+
+          <div
+            class="ingredientes-removidos"
+            *ngIf="item.ingredientesRemovidos?.length">
+
+            <p *ngFor="let ingrediente of item.ingredientesRemovidos">
+              Sem {{ ingrediente }}
+            </p>
+
+          </div>
+
+          <div class="preco-qtd">
+
+            <div class="valor">
+              {{ item.preco }}
+            </div>
+
+            <div class="quantidade-box" *ngIf="!item.recompensa">
+
+              <button
+                class="btn-qtd"
+                (click)="diminuirQuantidade(i)">
+                -
+              </button>
+
+              <span>{{ item.quantidade }}</span>
+
+              <button
+                class="btn-qtd"
+                (click)="aumentarQuantidade(i)">
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="recompensas-carrinho" *ngIf="recompensasDisponiveis.length > 0">
+
+        <h3>Recompensas disponíveis</h3>
+
+        <div
+          class="recompensa-item"
+          *ngFor="let recompensa of recompensasDisponiveis">
+
+          <span>{{ recompensa.nome }}</span>
+
+          <button (click)="usarRecompensa(recompensa)">
+            Usar
+          </button>
+
+        </div>
+
+      </div>
+
+        <button
+          class="btn-limpar"
+          *ngIf="carrinho.length > 0"
+          (click)="limparCarrinho()">
+          Limpar carrinho
+        </button>
+
+      <div
+        class="carrinho-vazio"
+        *ngIf="carrinho.length === 0">
+
+        <div class="icone-vazio">🛒</div>
+
+        <h3>O teu carrinho está vazio</h3>
+
+        <p>
+          Adiciona alguns pratos deliciosos para começares a tua encomenda.
+        </p>
+
+      </div>
+
+      <div class="total" *ngIf="carrinho.length > 0">
+
+        <span>TOTAL:</span>
+
+        <span class="valor-total">
+          {{ total.toFixed(2) }}€
+        </span>
+
+      </div>
+
+      <button class="btn-preto" (click)="adicionarPrato()">
+        Adicionar prato
+      </button>
+
+      <button class="btn-preto" *ngIf="carrinho.length > 0" (click)="irPagamento()">
+        Comprar
+      </button>
+
+    </div>
+
+  </div>
+
+      <div class="popup-overlay" *ngIf="mostrarPopup">
+
+      <div class="popup-card" [class.erro]="tipoPopup === 'erro'">
+
+        <div class="popup-icon">
+          {{ tipoPopup === 'erro' ? '!' : '✓' }}
+        </div>
+
+        <p>{{ mensagemPopup }}</p>
+
+        <button (click)="fecharPopup()">
+          OK
+        </button>
+
+      </div>
+
+    </div>
+  
+</ion-content>
+
+<div
+    class="modal-recompensa"
+    *ngIf="modalRecompensaAberto">
+
+    <div class="card-modal">
+
+      <h3>Escolha a recompensa</h3>
+
+      <button
+        class="produto-recompensa"
+        *ngFor="let produto of opcoesRecompensa"
+        (click)="selecionarProdutoRecompensa(produto)">
+
+        {{ produto.nome }}
+
+      </button>
+
+      <button
+        class="fechar-modal"
+        (click)="modalRecompensaAberto = false">
+
+        Cancelar
+
+      </button>
+
+    </div>
+
+  </div>
+

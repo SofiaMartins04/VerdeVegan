@@ -1,0 +1,122 @@
+.registo-content {
+  --background: #c7dfc4;
+}
+
+.container {
+  padding: 40px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  padding: 0 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+.input-box ion-icon {
+  font-size: 20px;
+  color: #444;
+}
+
+.input-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 15px;
+  color: black;
+  font-size: 16px;
+}
+
+.olho {
+  cursor: pointer;
+}
+
+.btn-registar {
+  margin-top: 10px;
+  height: 55px;
+  border: none;
+  border-radius: 30px;
+  background: black;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #000;
+}
+
+.login-link span {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-caixa {
+  width: 82%;
+  max-width: 340px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 24px;
+  text-align: center;
+}
+
+.popup-caixa.sucesso h2 {
+  color: #2d5c3b;
+}
+
+.popup-caixa.erro h2 {
+  color: #b42318;
+}
+
+.popup-btn {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 13px;
+  background: #2d5c3b;
+  color: white;
+  font-weight: 700;
+}
+
+.popup-caixa p {
+  display: block;
+  color: #333;
+  font-size: 16px;
+  margin: 12px 0 22px;
+  line-height: 1.4;
+  min-height: 20px;
+}
+
+.input-box.input-erro {
+  border: 2px solid #d93025;
+  box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.15);
+}
+
