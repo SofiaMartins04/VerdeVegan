@@ -1,5 +1,5 @@
 .pontos-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .pontos-container {
@@ -15,16 +15,16 @@
 h1 {
   font-size: 32px;
   font-weight: 900;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   margin: 0;
 }
 
 h1 span {
-  color: #7aad35;
+  color: var(--verdevegan-verde-claro);
 }
 
 .card-pontos {
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 18px;
   padding: 22px;
   box-shadow: 0 5px 14px rgba(0,0,0,.15);
@@ -41,30 +41,30 @@ h1 span {
   margin: 0 0 0 20px;
   font-size: 18px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .back-icon {
   font-size: 24px;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   cursor: pointer;
 }
 
 .pontos-total {
   font-size: 60px;
   font-weight: 900;
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
   text-align: center;
 }
 
 .texto-pontos {
   text-align: center;
-  color: #666;
+  color: var(--verdevegan-cinza-texto);
   margin-bottom: 25px;
 }
 
 h3 {
-  color: #000;
+  color: var(--verdevegan-preto);
   margin-top: 25px;
   font-size: 18px;
   font-weight: 700;
@@ -72,7 +72,7 @@ h3 {
 
 .lista-pontos {
   background: #e4f7e1;
-  border: 1px solid #176b36;
+  border: 1px solid var(--verdevegan-verde);
   border-radius: 14px;
   padding: 12px;
   margin-top: 10px;
@@ -80,7 +80,7 @@ h3 {
 
 .lista-pontos p {
   margin: 7px 0;
-  color: #000;
+  color: var(--verdevegan-preto);
   font-size: 13px;
   font-weight: 600;
 }
@@ -104,8 +104,8 @@ h3 {
 
 .recompensa-card.disponivel {
   background: #e4f7e1;
-  border: 1px solid #176b36;
-  color: #000;
+  border: 1px solid var(--verdevegan-verde);
+  color: var(--verdevegan-preto);
   opacity: 1;
   cursor: pointer;
 }
@@ -122,14 +122,14 @@ h3 {
 }
 
 .recompensa-card strong {
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
   font-size: 14px;
 }
 
 .recompensa-disponivel {
   background: #e4f7e1;
-  border: 1px solid #176b36;
-  color: #000;
+  border: 1px solid var(--verdevegan-verde);
+  color: var(--verdevegan-preto);
   border-radius: 12px;
   padding: 12px;
   font-size: 13px;
@@ -138,7 +138,7 @@ h3 {
 }
 
 .sem-recompensas {
-  color: #555;
+  color: var(--verdevegan-cinza-texto);
   font-size: 13px;
 }
 
@@ -155,24 +155,24 @@ h3 {
 .popup-caixa {
   width: 82%;
   max-width: 340px;
-  background: #ffffff;
+  background: var(--verdevegan-branco);
   border-radius: 22px;
   padding: 24px;
   text-align: center;
 }
 
 .popup-caixa p {
-  color: #333;
+  color: var(--verdevegan-cinza-texto);
   font-size: 16px;
   margin: 12px 0 22px;
 }
 
 .popup-caixa.sucesso h2 {
-  color: #2d5c3b;
+  color: var(--verdevegan-sucesso);
 }
 
 .popup-caixa.erro h2 {
-  color: #b42318;
+  color: var(--verdevegan-erro);
 }
 
 .popup-btn {
@@ -180,7 +180,7 @@ h3 {
   border: none;
   border-radius: 14px;
   padding: 13px;
-  background: #2d5c3b;
-  color: white;
+  background: var(--verdevegan-sucesso);
+  color: var(--verdevegan-branco);
   font-weight: 700;
 }

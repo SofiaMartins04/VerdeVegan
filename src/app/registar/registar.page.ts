@@ -6,6 +6,7 @@ import {
   IonContent,
   IonIcon
 } from '@ionic/angular/standalone';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-registar',
@@ -39,14 +40,16 @@ export class RegistarPage {
   erroMorada = false;
   erroPassword = false;
 
-  constructor( private router: Router) {}
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {}
 
   togglePassword() {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
   async registar() {
-
     this.erroNome = !this.nome.trim();
 
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,9 +71,8 @@ export class RegistarPage {
     ) {
       return;
     }
-    const utilizadores = JSON.parse(
-      localStorage.getItem('utilizadores') || '[]'
-    );
+
+    const utilizadores = await this.storageService.get('utilizadores') || [];
 
     const emailNormalizado = this.email.trim().toLowerCase();
 
@@ -94,13 +96,9 @@ export class RegistarPage {
 
     utilizadores.push(utilizador);
 
-    localStorage.setItem(
-      'utilizadores',
-      JSON.stringify(utilizadores)
-    );
+    await this.storageService.set('utilizadores', utilizadores);
 
     this.abrirPopup('Conta criada com sucesso!', 'sucesso');
-
   }
 
   irLogin() {

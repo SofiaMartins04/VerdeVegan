@@ -1,5 +1,5 @@
 .pedidos-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .pedidos-container {
@@ -14,15 +14,15 @@ h1 {
   font-size: 32px;
   font-weight: 900;
   margin: 0;
-  color: #176b36;
+  color: var(--verdevegan-verde);
 }
 
 h1 span {
-  color: #7aad35;
+  color: var(--verdevegan-verde-claro);
 }
 
 .card-pedidos {
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 18px;
   padding: 22px;
   min-height: 540px;
@@ -30,7 +30,7 @@ h1 span {
 }
 
 h2 {
-  color: #000;
+  color: var(--verdevegan-preto);
   font-size: 18px;
   font-weight: 800;
   margin: 0 0 22px;
@@ -38,7 +38,7 @@ h2 {
 
 .pedido {
   margin-bottom: 22px;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .pedido h3 {
@@ -60,7 +60,7 @@ h2 {
 }
 
 .linha-pedido strong {
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .estado {
@@ -73,8 +73,8 @@ h2 {
   height: 34px;
   border: none;
   border-radius: 20px;
-  background: #000;
-  color: white;
+  background: var(--verdevegan-preto);
+  color: var(--verdevegan-branco);
   font-size: 12px;
   font-weight: 700;
 }
@@ -82,7 +82,7 @@ h2 {
 .titulo-historico {
   margin-top: 45px;
   padding-top: 24px;
-  border-top: 2px solid #555555;
+  border-top: 2px solid var(--verdevegan-cinza-texto);
   font-size: 20px;
 }
 
@@ -91,7 +91,7 @@ h2 {
   text-align: center;
   font-size: 15px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
   margin-top: 25px;
 }
 
@@ -101,12 +101,12 @@ h2 {
 }
 
 .entregue {
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
   font-weight: 700;
 }
 
 .preco-item {
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
   font-size: 13px;
   font-weight: 800;
   margin: 2px 0 5px;
@@ -122,11 +122,11 @@ h2 {
 
   font-size: 16px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .total-pedido span {
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
 }
 
 .pedido.historico {
@@ -149,7 +149,7 @@ h2 {
 
 .entregue {
   background: #dff4df;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   display: inline-block;
   padding: 4px 10px;
   border-radius: 12px;
@@ -158,7 +158,7 @@ h2 {
 
 .pedido:not(.historico) {
   background: #e4f7e1;
-  border: 2px solid #176b36;
+  border: 2px solid var(--verdevegan-verde);
   border-radius: 14px;
   padding: 14px;
   margin-bottom: 22px;
@@ -175,11 +175,11 @@ h2 {
   margin: 0;
   font-size: 18px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .back-icon {
   font-size: 24px;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   cursor: pointer;
 }

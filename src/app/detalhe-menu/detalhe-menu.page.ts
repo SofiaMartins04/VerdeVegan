@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonContent,
   IonIcon
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { cartOutline, arrowBackOutline } from 'ionicons/icons';
+import { StorageService } from '../services/storage';
+import { ProdutosService } from '../services/produtos';
 
 @Component({
   selector: 'app-detalhe-menu',
@@ -24,31 +26,47 @@ export class DetalheMenuPage {
   produto: any;
   modalIngredientesAberto = false;
   ingredientesSelecionados: string[] = [];
+  quantidadeCarrinho = 0;
+  emailAtual: string | null = null;
 
   mostrarPopup = false;
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private storageService: StorageService,
+    private produtosService: ProdutosService
+  ) {
     addIcons({
-      cartOutline, arrowBackOutline
+      cartOutline,
+      arrowBackOutline
     });
+  }
 
-    this.atualizarQuantidadeCarrinho();
+  async ionViewWillEnter() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
 
-    const dados = localStorage.getItem('produtoSelecionado');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    if (dados) {
-      this.produto = JSON.parse(dados);
-      this.ingredientesSelecionados = [...this.produto.ingredientesPersonalizaveis];
+    this.produtosService.getProdutos().subscribe(async (produtos: any[]) => {
+      this.produto = produtos[id];
 
-    }
+      if (this.produto) {
+        this.ingredientesSelecionados = [
+          ...this.produto.ingredientesPersonalizaveis
+        ];
+      }
+
+      await this.atualizarQuantidadeCarrinho();
+    });
   }
 
   voltar() {
     this.router.navigate(['/tabs/tab1']);
   }
-  
+
   gerarEstrelasArray(rating: number): string[] {
     const cheias = Math.floor(rating);
     const vazias = 5 - cheias;
@@ -84,28 +102,30 @@ export class DetalheMenuPage {
 
   guardarIngredientes() {
     this.modalIngredientesAberto = false;
+    this.abrirPopup('Ingredientes atualizados.', 'sucesso');
   }
 
   get ingredientesRemovidos() {
+    if (!this.produto) {
+      return [];
+    }
+
     return this.produto.ingredientesPersonalizaveis.filter(
       (ingrediente: string) =>
         !this.ingredientesSelecionados.includes(ingrediente)
     );
   }
 
-  adicionarAoCarrinho() {
-    const emailAtual = localStorage.getItem('utilizadorAtual');
+  async adicionarAoCarrinho() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
 
-    if (!emailAtual) {
+    if (!this.emailAtual) {
       this.abrirPopup('Tens de iniciar sessão primeiro.', 'erro');
       return;
     }
 
-    const chaveCarrinho = `carrinho_${emailAtual}`;
-
-    const carrinhoAtual = JSON.parse(
-      localStorage.getItem(chaveCarrinho) || '[]'
-    );
+    const chaveCarrinho = `carrinho_${this.emailAtual}`;
+    const carrinhoAtual = await this.storageService.get(chaveCarrinho) || [];
 
     const removidosOrdenados = [...this.ingredientesRemovidos].sort();
 
@@ -136,31 +156,24 @@ export class DetalheMenuPage {
       });
     }
 
-    localStorage.setItem(
-      chaveCarrinho,
-      JSON.stringify(carrinhoAtual)
-    );
-
-    this.atualizarQuantidadeCarrinho();
+    await this.storageService.set(chaveCarrinho, carrinhoAtual);
+    await this.atualizarQuantidadeCarrinho();
 
     window.dispatchEvent(new Event('carrinhoAtualizado'));
+
+    this.abrirPopup('Produto adicionado ao carrinho.', 'sucesso');
   }
 
-  quantidadeCarrinho = 0;
+  async atualizarQuantidadeCarrinho() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
 
-  atualizarQuantidadeCarrinho() {
-    const emailAtual = localStorage.getItem('utilizadorAtual');
-
-    if (!emailAtual) {
+    if (!this.emailAtual) {
       this.quantidadeCarrinho = 0;
       return;
     }
 
-    const chaveCarrinho = `carrinho_${emailAtual}`;
-
-    const carrinho = JSON.parse(
-      localStorage.getItem(chaveCarrinho) || '[]'
-    );
+    const chaveCarrinho = `carrinho_${this.emailAtual}`;
+    const carrinho = await this.storageService.get(chaveCarrinho) || [];
 
     this.quantidadeCarrinho = carrinho.reduce((total: number, item: any) => {
       return total + item.quantidade;

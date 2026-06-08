@@ -1,5 +1,5 @@
 .pagamento-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .pagamento-container {
@@ -13,16 +13,16 @@
 h1 {
   font-size: 32px;
   font-weight: 900;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   margin: 0;
 }
 
 h1 span {
-  color: #7aad35;
+  color: var (--verdevegan-verde-claro);
 }
 
 .card-pagamento {
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 18px;
   padding: 22px;
   box-shadow: 0 5px 14px rgba(0,0,0,.15);
@@ -39,19 +39,19 @@ h1 span {
   margin: 0;
   font-size: 18px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .card-pagamento h3 {
   margin: 0 0 15px;
   font-size: 18px;
   font-weight: 600;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .back-icon {
   font-size: 24px;
-  color: #176b36;
+  color: var(--verdevegan-verde);
 }
 
 .icone-cartao {
@@ -68,11 +68,11 @@ h1 span {
 
 .icone-cartao ion-icon {
   font-size: 46px;
-  color: #176b36;
+  color: var(--verdevegan-verde);
 }
 
 .input-box {
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 12px;
   margin-bottom: 15px;
   padding: 0 15px;
@@ -85,7 +85,7 @@ h1 span {
   outline: none;
   background: transparent;
   padding: 15px 0;
-  color: black;
+  color: var(--verdevegan-preto);
   font-size: 15px;
 }
 
@@ -104,14 +104,14 @@ h1 span {
   height: 48px;
   border: none;
   border-radius: 25px;
-  background: #000;
-  color: white;
+  background: var(--verdevegan-preto);
+  color: var(--verdevegan-branco);
   font-weight: 700;
   font-size: 15px;
 }
 
 h3 {
-  color: #000;
+  color: var(--verdevegan-preto);
   font-size: 16px;
   font-weight: 800;
   margin: 22px 0 12px;
@@ -120,13 +120,13 @@ h3 {
 .total {
   margin-top: 22px;
   text-align: center;
-  color: #000;
+  color: var(--verdevegan-preto);
   font-size: 22px;
   font-weight: 900;
 }
 
 .total span {
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
 }
 
 .popup-backdrop {
@@ -142,7 +142,7 @@ h3 {
 .popup-caixa {
   width: 82%;
   max-width: 340px;
-  background: #ffffff;
+  background: var(--verdevegan-branco);
   border-radius: 22px;
   padding: 24px;
   text-align: center;
@@ -162,11 +162,11 @@ h3 {
 }
 
 .popup-caixa.sucesso h2 {
-  color: #2d5c3b;
+  color: var(--verdevegan-sucesso);
 }
 
 .popup-caixa.erro h2 {
-  color: #b42318;
+  color: var(--verdevegan-erro);
 }
 
 .popup-btn {
@@ -174,13 +174,13 @@ h3 {
   border: none;
   border-radius: 14px;
   padding: 13px;
-  background: #2d5c3b;
-  color: white;
+  background: var(--verdevegan-sucesso);
+  color: var(--verdevegan-branco);
   font-weight: 700;
 }
 
 .input-box.input-erro {
-  border: 2px solid #d93025;
+  border: 2px solid var(--verdevegan-erro);
   box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.15);
 }
 
@@ -208,7 +208,7 @@ h3 {
 }
 
 .validade-box.input-erro select {
-  border: 2px solid #d93025;
+  border: 2px solid var(--verdevegan-erro);
 }
 
 .linha-cartao {
@@ -231,7 +231,7 @@ h3 {
 .campo-select {
   padding: 0 8px;
   font-size: 12px;
-  color: #555;
+  color: var(--verdevegan-cinza-texto);
   outline: none;
 }
 
@@ -248,5 +248,5 @@ h3 {
 
 .input-erro,
 .campo-select.input-erro {
-  border: 2px solid #d93025;
+  border: 2px solid var(--verdevegan-erro);
 }

@@ -7,6 +7,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { personCircleOutline, arrowBackOutline } from 'ionicons/icons';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-tab4',
@@ -22,6 +23,7 @@ import { personCircleOutline, arrowBackOutline } from 'ionicons/icons';
 export class Tab4Page {
 
   fotoPerfil = '';
+  emailAtual: string | null = null;
 
   utilizador: any = {
     nome: '',
@@ -31,27 +33,28 @@ export class Tab4Page {
     fotoPerfil: ''
   };
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {
     addIcons({
       personCircleOutline,
       arrowBackOutline
     });
   }
 
-  ionViewWillEnter() {
-    const emailAtual = localStorage.getItem('utilizadorAtual');
+  async ionViewWillEnter() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
 
-    if (!emailAtual) {
+    if (!this.emailAtual) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const utilizadores = JSON.parse(
-      localStorage.getItem('utilizadores') || '[]'
-    );
+    const utilizadores = await this.storageService.get('utilizadores') || [];
 
     const utilizadorEncontrado = utilizadores.find(
-      (u: any) => u.email === emailAtual
+      (u: any) => u.email === this.emailAtual
     );
 
     if (utilizadorEncontrado) {
@@ -60,8 +63,8 @@ export class Tab4Page {
     }
   }
 
-  terminarSessao() {
-    localStorage.removeItem('utilizadorAtual');
+  async terminarSessao() {
+    await this.storageService.remove('utilizadorAtual');
     this.router.navigate(['/login']);
   }
 
@@ -78,26 +81,21 @@ export class Tab4Page {
 
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.onload = async () => {
       this.fotoPerfil = reader.result as string;
 
-      const emailAtual = localStorage.getItem('utilizadorAtual');
-
-      const utilizadores = JSON.parse(
-        localStorage.getItem('utilizadores') || '[]'
-      );
+      const utilizadores = await this.storageService.get('utilizadores') || [];
 
       const index = utilizadores.findIndex(
-        (u: any) => u.email === emailAtual
+        (u: any) => u.email === this.emailAtual
       );
 
       if (index !== -1) {
         utilizadores[index].fotoPerfil = this.fotoPerfil;
 
-        localStorage.setItem(
-          'utilizadores',
-          JSON.stringify(utilizadores)
-        );
+        await this.storageService.set('utilizadores', utilizadores);
+
+        this.utilizador = utilizadores[index];
       }
     };
 

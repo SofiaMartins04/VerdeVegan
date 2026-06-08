@@ -7,6 +7,7 @@ import {
 import { arrowBackOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-tab2',
@@ -19,33 +20,37 @@ import { addIcons } from 'ionicons';
     IonIcon
   ],
 })
-
 export class Tab2Page {
 
-  constructor(private router: Router) {
+  pedidos: any[] = [];
+  emailAtual: string | null = null;
+
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {
     addIcons({
       arrowBackOutline
     });
-
-  }
-
-  pedidos: any[] = [];
-
-  ionViewWillEnter() {
-    this.carregarPedidos();
-  }
-
-  get emailAtual() {
-    return localStorage.getItem('utilizadorAtual');
   }
 
   get chavePedidos() {
     return `pedidos_${this.emailAtual}`;
   }
 
-  carregarPedidos() {
-    const dados = localStorage.getItem(this.chavePedidos);
-    this.pedidos = dados ? JSON.parse(dados) : [];
+  async ionViewWillEnter() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
+
+    if (!this.emailAtual) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    await this.carregarPedidos();
+  }
+
+  async carregarPedidos() {
+    this.pedidos = await this.storageService.get(this.chavePedidos) || [];
   }
 
   get pedidosAtivos() {
@@ -59,18 +64,15 @@ export class Tab2Page {
       .reverse();
   }
 
-  marcarComoEntregue(id: number) {
+  async marcarComoEntregue(id: number) {
     const index = this.pedidos.findIndex(pedido => pedido.id === id);
 
     if (index !== -1) {
       this.pedidos[index].estado = 'Entregue';
 
-      localStorage.setItem(
-        this.chavePedidos,
-        JSON.stringify(this.pedidos)
-      );
+      await this.storageService.set(this.chavePedidos, this.pedidos);
 
-      this.carregarPedidos();
+      await this.carregarPedidos();
     }
   }
 

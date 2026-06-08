@@ -1,5 +1,5 @@
 .login-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .login-container {
@@ -14,7 +14,7 @@ h1 {
   text-align: center;
   font-size: 32px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
   margin-bottom: 40px;
 }
 
@@ -25,7 +25,7 @@ h1 {
 .input-box {
   margin-bottom: 10px;
   border-radius: 8px;
-  --background: white;
+  --background: var(--verdevegan-branco);
   --border-radius: 8px;
   --padding-start: 10px;
   --inner-padding-end: 10px;
@@ -33,7 +33,7 @@ h1 {
 }
 
 ion-icon {
-  color: #111;
+  color: var(--verdevegan-preto-suave);
   font-size: 20px;
 }
 
@@ -42,8 +42,8 @@ ion-icon {
   margin-top: 20px;
   height: 50px;
 
-  --background: #000;
-  --color: white;
+  --background: var(--verdevegan-preto);
+  --color: var(--verdevegan-branco);
   --border-radius: 25px;
 
   font-weight: 700;
@@ -54,7 +54,7 @@ ion-icon {
   margin-top: 12px;
   text-align: center;
   font-size: 14px;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .texto-registar span {
@@ -63,14 +63,14 @@ ion-icon {
 }
 
 ion-input {
-  --color: #000;
+  --color: var(--verdevegan-preto);
   --placeholder-color: #666;
   caret-color: #000;
 }
 
 .eye-icon {
   font-size: 22px;
-  color: #111;
+  color: var(--verdevegan-preto-suave);
   cursor: pointer;
 }
 
@@ -87,7 +87,7 @@ ion-input {
 .popup-caixa {
   width: 82%;
   max-width: 340px;
-  background: #ffffff;
+  background: var(--verdevegan-branco);
   border-radius: 22px;
   padding: 24px;
   text-align: center;
@@ -107,11 +107,11 @@ ion-input {
 }
 
 .popup-caixa.sucesso h2 {
-  color: #2d5c3b;
+  color: var(--verdevegan-sucesso);
 }
 
 .popup-caixa.erro h2 {
-  color: #b42318;
+  color: var(--verdevegan-erro);
 }
 
 .popup-btn {
@@ -119,8 +119,8 @@ ion-input {
   border: none;
   border-radius: 14px;
   padding: 13px;
-  background: #2d5c3b;
-  color: white;
+  background: var(--verdevegan-sucesso);
+  color: var(--verdevegan-branco);
   font-weight: 700;
   font-size: 15px;
 }

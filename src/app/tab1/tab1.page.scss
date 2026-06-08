@@ -1,5 +1,5 @@
 .home-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .home-container {
@@ -16,19 +16,19 @@ h1 {
   font-size: 32px;
   font-weight: 900;
   margin: 0;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   cursor: pointer;
 }
 
 h1 span {
-  color: #7aad35;
+  color: var(--verdevegan-verde-claro);
 }
 
 .cart-btn {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: white;
+  background: var(--verdevegan-branco);
   border: none;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
   display: flex;
@@ -39,13 +39,13 @@ h1 span {
 
 .cart-btn ion-icon {
   font-size: 25px;
-  color: #111;
+  color: var(--verdevegan-preto-suave);
 }
 
 .search-box {
   margin-top: 25px;
   height: 50px;
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 25px;
   padding: 0 18px;
   display: flex;
@@ -56,14 +56,14 @@ h1 span {
 }
 
 .search-box ion-input {
-  --color: #000;
-  --placeholder-color: #555;
+  --color: var(--verdevegan-preto);
+  --placeholder-color: var(--verdevegan-cinza-texto);
   font-size: 14px;
 }
 
 .search-box ion-icon {
   font-size: 22px;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .categorias {
@@ -75,7 +75,7 @@ h1 span {
 .categoria {
   width: 45px;
   height: 45px;
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -88,7 +88,7 @@ h2 {
   font-size: 18px;
   font-weight: 800;
   margin-bottom: 14px;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .produtos-grid {
@@ -98,7 +98,7 @@ h2 {
 }
 
 .produto-card {
-  background: white;
+  background: var(--verdevegan-branco);
   border-radius: 14px;
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -113,7 +113,7 @@ h2 {
 
 .produto-card h3 {
   font-size: 13px;
-  color: #000;
+  color: var(--verdevegan-preto);
   margin: 8px 0 4px;
   font-weight: 600;
   line-height: 1.25;
@@ -121,14 +121,14 @@ h2 {
 
 .tempo {
   font-size: 9px;
-  color: #000;
+  color: var(--verdevegan-preto);
   margin: 4px 0;
   text-align: center;
 }
 
 .estrelas {
   font-size: 13px;
-  color: #000;
+  color: var(--verdevegan-preto);
   text-align: center;
   margin: 3px 0;
 }
@@ -136,15 +136,15 @@ h2 {
 .preco {
   font-size: 13px;
   font-weight: 800;
-  color: #22a000;
+  color: var(--verdevegan-verde-pontos);
   text-align: center;
   margin: 2px 0 0;
 }
 
 .categoria.ativa {
-  background: white;
+  background: var(--verdevegan-branco);
   transform: scale(1.15);
-  border: 2px solid #176b36;
+  border: 2px solid var(--verdevegan-verde);
   box-shadow:
     0 0 0 4px rgba(23, 107, 54, 0.25),
     0 6px 14px rgba(23, 107, 54, 0.35);
@@ -163,8 +163,8 @@ h2 {
 }
 
 .btn-destaques {
-  background: white;
-  color: #176b36;
+  background: var(--verdevegan-branco);
+  color: var(--verdevegan-verde);
   border: none;
   border-radius: 18px;
   padding: 7px 12px;
@@ -180,7 +180,7 @@ h2 {
 }
 
 .stars {
-  color: #000;
+  color: var(--verdevegan-preto);
   font-size: 18px;
   text-align: center;
   width: 100%;
@@ -194,8 +194,8 @@ h2 {
   height: 22px;
   padding: 0 5px;
   border-radius: 50%;
-  background: #22a000;
-  color: white;
+  background: var(--verdevegan-verde-pontos);
+  color: var(--verdevegan-branco);
   font-size: 14px;
   font-weight: 700;
   display: flex;

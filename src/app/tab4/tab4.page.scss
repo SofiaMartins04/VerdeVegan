@@ -1,5 +1,5 @@
 .conta-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .conta-container {
@@ -17,15 +17,15 @@ h1 {
   font-size: 32px;
   font-weight: 900;
   margin: 0;
-  color: #176b36;
+  color: var(--verdevegan-verde);
 }
 
 h1 span {
-  color: #7aad35;
+  color: var(--verdevegan-verde-claro);
 }
 
 .card-conta {
-  background: white;
+  background:var(--verdevegan-branco);
   border-radius: 18px;
   padding: 22px;
   box-shadow: 0 5px 14px rgba(0,0,0,0.15);
@@ -43,12 +43,12 @@ h1 span {
   margin: 0;
   font-size: 18px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .back-icon {
   font-size: 24px;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   margin-right: 12px;
 }
 
@@ -65,13 +65,13 @@ h1 span {
 
 .avatar ion-icon {
   font-size: 92px;
-  color: #176b36;
+  color: var(--verdevegan-verde);
 }
 
 h3 {
   font-size: 20px;
   font-weight: 800;
-  color: #000;
+  color: var(--verdevegan-preto);
   width: 100%;
   text-align: center;
   margin: 12px 0 35px;
@@ -79,7 +79,7 @@ h3 {
 
 p {
   font-size: 14px;
-  color: #000;
+  color: var(--verdevegan-preto);
   margin: 0 0 12px 0;
 }
 
@@ -92,13 +92,13 @@ p {
 
   font-size: 16px;
   font-weight: 600;
-  color: #000;
+  color: var(--verdevegan-preto);
 }
 
 .notificacoes input[type="checkbox"] {
   width: 22px;
   height: 22px;
-  accent-color: #176b36;
+  accent-color: var(--verdevegan-verde);
   cursor: pointer;
 }
 
@@ -108,8 +108,8 @@ p {
   height: 48px;
   border: none;
   border-radius: 25px;
-  background: #000;
-  color: white;
+  background: var(--verdevegan-preto);
+  color: var(--verdevegan-branco);
   font-weight: 700;
   font-size: 15px;
 }
@@ -125,7 +125,7 @@ p {
   text-align: center;
   font-size: 13px;
   font-weight: 700;
-  color: #176b36;
+  color: var(--verdevegan-verde);
   margin-top: -8px;
   margin-bottom: 18px;
   cursor: pointer;

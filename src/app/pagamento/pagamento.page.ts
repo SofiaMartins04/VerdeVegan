@@ -8,6 +8,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, cardOutline } from 'ionicons/icons';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-pagamento',
@@ -35,6 +36,7 @@ export class PagamentoPage {
   cvv = '';
 
   carrinho: any[] = [];
+  emailAtual: string | null = null;
 
   mostrarPopup = false;
   mensagemPopup = '';
@@ -64,15 +66,14 @@ export class PagamentoPage {
     '31','32','33','34','35'
   ];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {
     addIcons({
       arrowBackOutline,
       cardOutline
     });
-  }
-
-  get emailAtual() {
-    return localStorage.getItem('utilizadorAtual');
   }
 
   get chaveCarrinho() {
@@ -83,16 +84,17 @@ export class PagamentoPage {
     return `pedidos_${this.emailAtual}`;
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
+
     if (!this.emailAtual) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const dadosCarrinho = localStorage.getItem(this.chaveCarrinho);
-    this.carrinho = dadosCarrinho ? JSON.parse(dadosCarrinho) : [];
+    this.carrinho = await this.storageService.get(this.chaveCarrinho) || [];
 
-    const utilizadores = JSON.parse(localStorage.getItem('utilizadores') || '[]');
+    const utilizadores = await this.storageService.get('utilizadores') || [];
 
     const utilizador = utilizadores.find(
       (u: any) => u.email === this.emailAtual
@@ -115,12 +117,11 @@ export class PagamentoPage {
     this.router.navigate(['/carrinho']);
   }
 
-  finalizarPagamento() {
+  async finalizarPagamento() {
     const regexCodigoPostal = /^\d{4}-\d{3}$/;
     const regexSoLetras = /^[A-Za-zÀ-ÿ\s]+$/;
     const regexNif = /^\d{9}$/;
     const regexNumeroCartao = /^\d{16}$/;
-    const regexValidade = /^(0[1-9]|1[0-2])\/\d{2}$/;
     const regexCvv = /^\d{3}$/;
 
     this.erroNome = !this.nome.trim();
@@ -158,21 +159,16 @@ export class PagamentoPage {
     }, 0);
 
     const chavePontos = `pontos_${this.emailAtual}`;
+    const pontosAtuais = Number(await this.storageService.get(chavePontos) || 0);
 
-    const pontosAtuais = Number(
-      localStorage.getItem(chavePontos) || 0
-    );
-
-    localStorage.setItem(
+    await this.storageService.set(
       chavePontos,
-      String(pontosAtuais + pontosGanhos)
+      pontosAtuais + pontosGanhos
     );
 
     this.validade = `${this.mes}/${this.ano}`;
-    
-    const pedidos = JSON.parse(
-      localStorage.getItem(this.chavePedidos) || '[]'
-    );
+
+    const pedidos = await this.storageService.get(this.chavePedidos) || [];
 
     const novoPedido = {
       id: Date.now(),
@@ -190,12 +186,9 @@ export class PagamentoPage {
 
     pedidos.push(novoPedido);
 
-    localStorage.setItem(
-      this.chavePedidos,
-      JSON.stringify(pedidos)
-    );
+    await this.storageService.set(this.chavePedidos, pedidos);
 
-    localStorage.removeItem(this.chaveCarrinho);
+    await this.storageService.remove(this.chaveCarrinho);
 
     window.dispatchEvent(new Event('carrinhoAtualizado'));
 

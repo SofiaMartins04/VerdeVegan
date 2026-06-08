@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { IonContent,IonItem, IonInput, IonButton, IonIcon} from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { mailOutline, keyOutline, eyeOutline, eyeOffOutline} from 'ionicons/icons';
+import { mailOutline, keyOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,10 @@ export class LoginPage {
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {
     addIcons({ mailOutline, keyOutline, eyeOutline, eyeOffOutline });
   }
 
@@ -40,9 +44,7 @@ export class LoginPage {
   }
 
   async entrar() {
-    const utilizadores = JSON.parse(
-      localStorage.getItem('utilizadores') || '[]'
-    );
+    const utilizadores = await this.storageService.get('utilizadores') || [];
 
     if (utilizadores.length === 0) {
       this.abrirPopup('Não existe nenhuma conta registada.', 'erro');
@@ -58,10 +60,7 @@ export class LoginPage {
     );
 
     if (utilizador) {
-      localStorage.setItem(
-        'utilizadorAtual',
-        utilizador.email
-      );
+      await this.storageService.set('utilizadorAtual', utilizador.email);
 
       this.abrirPopup('Login efetuado com sucesso!', 'sucesso');
       this.router.navigate(['/tabs/tab1']);

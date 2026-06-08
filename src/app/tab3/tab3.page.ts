@@ -7,6 +7,7 @@ import {
   IonContent,
   IonIcon
 } from '@ionic/angular/standalone';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-tab3',
@@ -15,7 +16,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    IonContent,  
+    IonContent,
     IonIcon
   ]
 })
@@ -25,27 +26,24 @@ export class Tab3Page {
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
 
-  constructor(private router: Router) {
-      addIcons({
-        arrowBackOutline
-      });
-    }
-  
   recompensasDisponiveis: any[] = [];
+  emailAtual: string | null = null;
+  pontos = 0;
 
   recompensas = [
     { tipo: 'cafe', nome: 'Café grátis', custo: 10 },
-    { tipo: 'bebida', nome: 'Bebida grátis', custo: 30},
+    { tipo: 'bebida', nome: 'Bebida grátis', custo: 30 },
     { tipo: 'sobremesa', nome: 'Sobremesa grátis', custo: 60 },
     { tipo: 'refeicao', nome: 'Refeição grátis', custo: 100 }
   ];
 
-  ionViewWillEnter() {
-    this.carregarRecompensas();
-  }
-
-  get emailAtual() {
-    return localStorage.getItem('utilizadorAtual');
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {
+    addIcons({
+      arrowBackOutline
+    });
   }
 
   get chavePontos() {
@@ -56,30 +54,37 @@ export class Tab3Page {
     return `recompensas_${this.emailAtual}`;
   }
 
-  get pontos() {
-    return Number(localStorage.getItem(this.chavePontos) || 0);
+  async ionViewWillEnter() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
+
+    if (!this.emailAtual) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    await this.carregarPontos();
+    await this.carregarRecompensas();
   }
 
-  carregarRecompensas() {
-    const dados = localStorage.getItem(this.chaveRecompensas);
-    this.recompensasDisponiveis = dados ? JSON.parse(dados) : [];
+  async carregarPontos() {
+    this.pontos = Number(await this.storageService.get(this.chavePontos) || 0);
   }
 
-  resgatarRecompensa(recompensa: any) {
+  async carregarRecompensas() {
+    this.recompensasDisponiveis = await this.storageService.get(this.chaveRecompensas) || [];
+  }
+
+  async resgatarRecompensa(recompensa: any) {
     if (this.pontos < recompensa.custo) {
+      this.abrirPopup('Não tens pontos suficientes.', 'erro');
       return;
     }
 
     const novosPontos = this.pontos - recompensa.custo;
 
-    localStorage.setItem(
-      this.chavePontos,
-      String(novosPontos)
-    );
+    await this.storageService.set(this.chavePontos, novosPontos);
 
-    const recompensasGuardadas = JSON.parse(
-      localStorage.getItem(this.chaveRecompensas) || '[]'
-    );
+    const recompensasGuardadas = await this.storageService.get(this.chaveRecompensas) || [];
 
     recompensasGuardadas.push({
       id: Date.now(),
@@ -88,12 +93,10 @@ export class Tab3Page {
       usado: false
     });
 
-    localStorage.setItem(
-      this.chaveRecompensas,
-      JSON.stringify(recompensasGuardadas)
-    );
+    await this.storageService.set(this.chaveRecompensas, recompensasGuardadas);
 
-    this.carregarRecompensas();
+    await this.carregarPontos();
+    await this.carregarRecompensas();
 
     this.abrirPopup('Recompensa adicionada à tua conta!', 'sucesso');
   }

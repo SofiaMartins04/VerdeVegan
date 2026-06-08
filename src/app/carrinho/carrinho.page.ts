@@ -10,6 +10,7 @@ import {
   cartOutline,
   arrowBackOutline
 } from 'ionicons/icons';
+import { StorageService } from '../services/storage';
 
 @Component({
   selector: 'app-carrinho',
@@ -26,6 +27,7 @@ export class CarrinhoPage {
 
   carrinho: any[] = [];
   recompensasDisponiveis: any[] = [];
+  emailAtual: string | null = null;
 
   modalRecompensaAberto = false;
   recompensaSelecionada: any = null;
@@ -34,15 +36,14 @@ export class CarrinhoPage {
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) {
     addIcons({
       cartOutline,
       arrowBackOutline
     });
-  }
-
-  get emailAtual() {
-    return localStorage.getItem('utilizadorAtual');
   }
 
   get chaveCarrinho() {
@@ -53,12 +54,16 @@ export class CarrinhoPage {
     return `recompensas_${this.emailAtual}`;
   }
 
-  ionViewWillEnter() {
-    const dados = localStorage.getItem(this.chaveCarrinho);
-    this.carrinho = dados ? JSON.parse(dados) : [];
+  async ionViewWillEnter() {
+    this.emailAtual = await this.storageService.get('utilizadorAtual');
 
-    const recompensas = localStorage.getItem(this.chaveRecompensas);
-    this.recompensasDisponiveis = recompensas ? JSON.parse(recompensas) : [];
+    if (!this.emailAtual) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.carrinho = await this.storageService.get(this.chaveCarrinho) || [];
+    this.recompensasDisponiveis = await this.storageService.get(this.chaveRecompensas) || [];
   }
 
   fechar() {
@@ -72,29 +77,19 @@ export class CarrinhoPage {
     }, 0);
   }
 
-  guardarCarrinho() {
-    localStorage.setItem(
-      this.chaveCarrinho,
-      JSON.stringify(this.carrinho)
-    );
-
+  async guardarCarrinho() {
+    await this.storageService.set(this.chaveCarrinho, this.carrinho);
     window.dispatchEvent(new Event('carrinhoAtualizado'));
   }
 
-  guardarRecompensas() {
-    localStorage.setItem(
-      this.chaveRecompensas,
-      JSON.stringify(this.recompensasDisponiveis)
-    );
+  async guardarRecompensas() {
+    await this.storageService.set(this.chaveRecompensas, this.recompensasDisponiveis);
   }
 
-  usarRecompensa(recompensa: any) {
-
+  async usarRecompensa(recompensa: any) {
     this.recompensaSelecionada = recompensa;
 
-    const produtos = JSON.parse(
-      localStorage.getItem('produtos') || '[]'
-    );
+    const produtos = await this.storageService.get('produtos') || [];
 
     if (recompensa.tipo === 'cafe') {
       this.opcoesRecompensa = produtos.filter((p: any) =>
@@ -125,7 +120,7 @@ export class CarrinhoPage {
     this.modalRecompensaAberto = true;
   }
 
-  selecionarProdutoRecompensa(produto: any) {
+  async selecionarProdutoRecompensa(produto: any) {
     this.carrinho.push({
       nome: produto.nome,
       preco: '0.00€',
@@ -141,15 +136,15 @@ export class CarrinhoPage {
       r => r.id !== this.recompensaSelecionada.id
     );
 
-    this.guardarCarrinho();
-    this.guardarRecompensas();
+    await this.guardarCarrinho();
+    await this.guardarRecompensas();
 
     this.modalRecompensaAberto = false;
     this.recompensaSelecionada = null;
     this.opcoesRecompensa = [];
   }
 
-  cancelarRecompensa(index: number) {
+  async cancelarRecompensa(index: number) {
     const item = this.carrinho[index];
 
     let pontosDevolver = 0;
@@ -173,32 +168,32 @@ export class CarrinhoPage {
     }
 
     const chavePontos = `pontos_${this.emailAtual}`;
-    const pontosAtuais = Number(localStorage.getItem(chavePontos) || 0);
+    const pontosAtuais = Number(await this.storageService.get(chavePontos) || 0);
 
-    localStorage.setItem(
+    await this.storageService.set(
       chavePontos,
-      String(pontosAtuais + pontosDevolver)
+      pontosAtuais + pontosDevolver
     );
 
     this.carrinho.splice(index, 1);
 
-    this.guardarCarrinho();
+    await this.guardarCarrinho();
 
     this.abrirPopup('Recompensa removida e pontos devolvidos.', 'sucesso');
   }
 
-  removerProduto(index: number) {
+  async removerProduto(index: number) {
     this.carrinho.splice(index, 1);
-    this.guardarCarrinho();
+    await this.guardarCarrinho();
   }
 
-  limparCarrinho() {
+  async limparCarrinho() {
     this.carrinho = [];
-    localStorage.removeItem(this.chaveCarrinho);
-     window.dispatchEvent(new Event('carrinhoAtualizado'));
+    await this.storageService.remove(this.chaveCarrinho);
+    window.dispatchEvent(new Event('carrinhoAtualizado'));
   }
 
-  aumentarQuantidade(index: number) {
+  async aumentarQuantidade(index: number) {
     if (this.carrinho[index].recompensa) {
       return;
     }
@@ -209,12 +204,12 @@ export class CarrinhoPage {
     }
 
     this.carrinho[index].quantidade++;
-    this.guardarCarrinho();
+    await this.guardarCarrinho();
   }
 
-  diminuirQuantidade(index: number) {
+  async diminuirQuantidade(index: number) {
     if (this.carrinho[index].recompensa) {
-      this.removerProduto(index);
+      await this.removerProduto(index);
       return;
     }
 
@@ -224,7 +219,7 @@ export class CarrinhoPage {
       this.carrinho.splice(index, 1);
     }
 
-    this.guardarCarrinho();
+    await this.guardarCarrinho();
   }
 
   adicionarPrato() {

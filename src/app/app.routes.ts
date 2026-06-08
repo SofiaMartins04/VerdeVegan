@@ -27,7 +27,7 @@ export const routes: Routes = [
     loadComponent: () => import('./tab4/tab4.page').then( m => m.Tab4Page)
   },
   {
-    path: 'detalhe-menu',
+    path: 'detalhe-menu/:id',
     loadComponent: () => import('./detalhe-menu/detalhe-menu.page').then( m => m.DetalheMenuPage)
   },
   {

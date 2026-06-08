@@ -1,5 +1,5 @@
 .intro-content {
-  --background: #c7dfc4;
+  --background: var(--verdevegan-fundo);
 }
 
 .intro-container {
@@ -25,8 +25,8 @@
 .btn-comecar {
   margin-bottom: 20px;
 
-  --background: #040a16;
-  --color: white;
+  --background: var(--verdevegan-preto);
+  --color: var(--verdevegan-branco);
 
   --border-radius: 30px;
 
