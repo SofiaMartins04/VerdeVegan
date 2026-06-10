@@ -68,3 +68,79 @@ ion-input .input-highlight {
   --verdevegan-sucesso: #2d5c3b;
   --verdevegan-erro: #b42318;
 }
+
+.popup-backdrop,
+.popup-overlay,
+.modal-confirmacao {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.popup-caixa,
+.popup-card,
+.card-confirmacao {
+  width: 82%;
+  max-width: 340px;
+  background: var(--verdevegan-branco);
+  border-radius: 22px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
+}
+
+.popup-caixa h2,
+.popup-card h2,
+.card-confirmacao h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.popup-caixa p,
+.popup-card p,
+.card-confirmacao p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 22px;
+  line-height: 1.4;
+}
+
+.popup-caixa.sucesso h2,
+.popup-card.sucesso h2 {
+  color: var(--verdevegan-sucesso);
+}
+
+.popup-caixa.erro h2,
+.popup-card.erro h2 {
+  color: var(--verdevegan-erro);
+}
+
+.popup-btn,
+.popup-card button,
+.btn-confirmar-remover {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 13px;
+  background: var(--verdevegan-sucesso);
+  color: var(--verdevegan-branco);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.btn-cancelar-remover {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 13px;
+  background: transparent;
+  color: var(--verdevegan-preto);
+  font-weight: 700;
+  font-size: 15px;
+}

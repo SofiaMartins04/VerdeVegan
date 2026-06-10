@@ -23,11 +23,16 @@ import { StorageService } from '../services/storage';
     RouterLink
   ]
 })
+// Página de login: entrada do utilizador e feedback (validação simples + popup)
 export class LoginPage {
+  // Dados do formulário
   email = '';
   password = '';
+
+  // Controla visibilidade da password (true = mostrar como texto)
   mostrarPassword = false;
 
+  // Popup de feedback usado para sucesso/erro
   mostrarPopup = false;
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
@@ -43,16 +48,21 @@ export class LoginPage {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
+  // Tenta autenticar o utilizador com os dados guardados em Storage
   async entrar() {
+    // Lê lista de utilizadores registados
     const utilizadores = await this.storageService.get('utilizadores') || [];
 
+    // Validação básica: verifica se existe pelo menos uma conta
     if (utilizadores.length === 0) {
       this.abrirPopup('Não existe nenhuma conta registada.', 'erro');
       return;
     }
 
+    // Normaliza email (case-insensitive)
     const emailNormalizado = this.email.trim().toLowerCase();
 
+    // Procura utilizador com email e password coincidentes
     const utilizador = utilizadores.find(
       (u: any) =>
         u.email === emailNormalizado &&
@@ -60,11 +70,13 @@ export class LoginPage {
     );
 
     if (utilizador) {
+      // Guarda o email do utilizador logado (session)
       await this.storageService.set('utilizadorAtual', utilizador.email);
 
       this.abrirPopup('Login efetuado com sucesso!', 'sucesso');
       this.router.navigate(['/tabs/tab1']);
     } else {
+      // Email ou password incorretos
       this.abrirPopup('Email ou palavra-passe incorretos.', 'erro');
     }
   }

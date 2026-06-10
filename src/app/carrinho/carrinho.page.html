@@ -12,6 +12,7 @@
 
     <div class="card-carrinho">
 
+  
       <div class="header-carrinho">
 
         <ion-icon
@@ -24,8 +25,8 @@
 
       </div>
 
-      <div class="produto-carrinho" 
-      *ngFor="let item of carrinho; let i = index">
+      <!-- Lista de produtos no carrinho (binding: `carrinho` no componente) -->
+      <div class="produto-carrinho" *ngFor="let item of carrinho; let i = index">
 
         <img [src]="item.imagem">
 
@@ -33,21 +34,19 @@
 
           <h3>{{ item.nome }}</h3>
 
-          <div
-            *ngIf="item.recompensa"
-            class="recompensa-usada">
+          <!-- Se o item for uma recompensa, mostra botão para cancelar uso -->
+          <div *ngIf="item.recompensa" class="recompensa-usada">
 
             <button
               class="btn-cancelar-recompensa"
-              (click)="cancelarRecompensa(i)">
+              (click)="abrirConfirmacaoRecompensa(i)">
               Não usar
             </button>
 
           </div>
 
-          <div
-            class="ingredientes-removidos"
-            *ngIf="item.ingredientesRemovidos?.length">
+          <!-- Ingredientes removidos (opcional) -->
+          <div  class="ingredientes-removidos"  *ngIf="item.ingredientesRemovidos?.length">
 
             <p *ngFor="let ingrediente of item.ingredientesRemovidos">
               Sem {{ ingrediente }}
@@ -57,14 +56,15 @@
 
           <div class="preco-qtd">
 
+            <!-- Preço exibido (pode ser "0.00€" para recompensas) -->
             <div class="valor">
               {{ item.preco }}
             </div>
 
+            <!-- Controlo de quantidade: chama `diminuirQuantidade` / `aumentarQuantidade` -->
             <div class="quantidade-box" *ngIf="!item.recompensa">
 
-              <button
-                class="btn-qtd"
+              <button class="btn-qtd"
                 (click)="diminuirQuantidade(i)">
                 -
               </button>
@@ -85,16 +85,16 @@
 
       </div>
 
+      <!-- Recompensas disponíveis para usar (binding: `recompensasDisponiveis`) -->
       <div class="recompensas-carrinho" *ngIf="recompensasDisponiveis.length > 0">
 
         <h3>Recompensas disponíveis</h3>
 
-        <div
-          class="recompensa-item"
-          *ngFor="let recompensa of recompensasDisponiveis">
+        <div class="recompensa-item" *ngFor="let recompensa of recompensasDisponiveis">
 
           <span>{{ recompensa.nome }}</span>
 
+          <!-- Botão 'Usar' abre modal via `usarRecompensa(recompensa)` -->
           <button (click)="usarRecompensa(recompensa)">
             Usar
           </button>
@@ -103,16 +103,16 @@
 
       </div>
 
-        <button
-          class="btn-limpar"
-          *ngIf="carrinho.length > 0"
-          (click)="limparCarrinho()">
-          Limpar carrinho
-        </button>
+      <button
+        class="btn-limpar"
+        *ngIf="carrinho.length > 0"
+        (click)="abrirConfirmacaoLimparCarrinho()">
+        Limpar carrinho
+      </button>
 
+      <!-- Estado vazio do carrinho  -->
       <div
-        class="carrinho-vazio"
-        *ngIf="carrinho.length === 0">
+        class="carrinho-vazio" *ngIf="carrinho.length === 0">
 
         <div class="icone-vazio">🛒</div>
 
@@ -124,6 +124,7 @@
 
       </div>
 
+      <!-- Mostra o total calculado no componente (`get total`) -->
       <div class="total" *ngIf="carrinho.length > 0">
 
         <span>TOTAL:</span>
@@ -143,29 +144,60 @@
       </button>
 
     </div>
-
+ 
   </div>
 
-      <div class="popup-overlay" *ngIf="mostrarPopup">
+  <!-- Popup informativo: mostra mensagens de sucesso/erro (mostrarPopup) -->
+  <div class="popup-backdrop" *ngIf="mostrarPopup">
 
-      <div class="popup-card" [class.erro]="tipoPopup === 'erro'">
+    <div class="popup-caixa" [ngClass]="tipoPopup">
 
-        <div class="popup-icon">
-          {{ tipoPopup === 'erro' ? '!' : '✓' }}
-        </div>
+      <h2>{{ tipoPopup === 'sucesso' ? 'Sucesso' : 'Erro' }}</h2>
 
-        <p>{{ mensagemPopup }}</p>
+      <p>{{ mensagemPopup }}</p>
 
-        <button (click)="fecharPopup()">
-          OK
-        </button>
-
-      </div>
+      <button class="popup-btn" (click)="fecharPopup()">
+        OK
+      </button>
 
     </div>
+  </div>
   
+  <!-- Modal de confirmação: reutilizado para remover item, cancelar recompensa ou limpar carrinho -->
+  <div class="popup-backdrop" *ngIf="modalRemoverAberto">
+    <div class="popup-caixa">
+
+
+      <p *ngIf="tipoConfirmacao === 'produto'">
+        Tens a certeza que queres remover este produto do carrinho?
+      </p>
+
+      <p *ngIf="tipoConfirmacao === 'recompensa'">
+        Tens a certeza que não queres utilizar esta recompensa? Os pontos serão devolvidos à tua conta.
+      </p>
+
+      <p *ngIf="tipoConfirmacao === 'carrinho'">
+        Tens a certeza que queres remover todos os artigos do carrinho?
+      </p>
+
+      <button
+        class="popup-btn"
+        (click)="confirmarAcao()">
+        Confirmar
+      </button>
+
+      <button
+        class="btn-cancelar-remover"
+        (click)="fecharConfirmacaoRemover()">
+        Cancelar
+      </button>
+
+    </div>
+  </div>
+
 </ion-content>
 
+<!-- Modal de seleção de produto grátis para uma recompensa -->
 <div
     class="modal-recompensa"
     *ngIf="modalRecompensaAberto">
@@ -194,4 +226,3 @@
     </div>
 
   </div>
-

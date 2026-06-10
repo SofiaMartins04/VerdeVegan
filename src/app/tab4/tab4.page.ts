@@ -20,11 +20,17 @@ import { StorageService } from '../services/storage';
     IonIcon
   ]
 })
+// Página de Perfil: exibe dados do utilizador,
+// permite alterar foto de perfil, e oferece opção de logout.
 export class Tab4Page {
 
+  
   fotoPerfil = '';
+
+  // Email do utilizador
   emailAtual: string | null = null;
 
+  // Objeto com todos os dados do utilizador
   utilizador: any = {
     nome: '',
     email: '',
@@ -44,6 +50,7 @@ export class Tab4Page {
   }
 
   async ionViewWillEnter() {
+    // Carrega email e depois procura os dados do utilizador na lista
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
     if (!this.emailAtual) {
@@ -53,6 +60,7 @@ export class Tab4Page {
 
     const utilizadores = await this.storageService.get('utilizadores') || [];
 
+    // Encontra o utilizador com login pelo email
     const utilizadorEncontrado = utilizadores.find(
       (u: any) => u.email === this.emailAtual
     );
@@ -64,15 +72,17 @@ export class Tab4Page {
   }
 
   async terminarSessao() {
+    // Remove a chave de utilizador com lgoin feito e volta ao login
     await this.storageService.remove('utilizadorAtual');
     this.router.navigate(['/login']);
   }
 
-  voltar() {
+   voltar() {
     this.router.navigate(['/tabs/tab1']);
   }
 
   selecionarFoto(event: any) {
+    // Lê ficheiro de imagem, e guarda no perfil
     const ficheiro = event.target.files[0];
 
     if (!ficheiro) {
@@ -86,11 +96,13 @@ export class Tab4Page {
 
       const utilizadores = await this.storageService.get('utilizadores') || [];
 
+      // Encontra o índice do utilizador atual na lista
       const index = utilizadores.findIndex(
         (u: any) => u.email === this.emailAtual
       );
 
       if (index !== -1) {
+        // Atualiza a foto no objeto utilizador e guarda tudo
         utilizadores[index].fotoPerfil = this.fotoPerfil;
 
         await this.storageService.set('utilizadores', utilizadores);

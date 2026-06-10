@@ -69,51 +69,6 @@ h1 {
   cursor: pointer;
 }
 
-.popup-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.popup-caixa {
-  width: 82%;
-  max-width: 340px;
-  background: var(--verdevegan-branco);
-  border-radius: 22px;
-  padding: 24px;
-  text-align: center;
-}
-
-.popup-caixa.sucesso h2 {
-  color: var(--verdevegan-sucesso);
-}
-
-.popup-caixa.erro h2 {
-  color: var(--verdevegan-erro);
-}
-
-.popup-btn {
-  width: 100%;
-  border: none;
-  border-radius: 14px;
-  padding: 13px;
-  background: var(--verdevegan-sucesso);
-  color: white;
-  font-weight: 700;
-}
-
-.popup-caixa p {
-  display: block;
-  color: #333;
-  font-size: 16px;
-  margin: 12px 0 22px;
-  line-height: 1.4;
-  min-height: 20px;
-}
 
 .input-box.input-erro {
   border: 2px solid var(--verdevegan-erro);

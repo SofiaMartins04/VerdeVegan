@@ -2,12 +2,14 @@
 
   <div class="conta-container">
 
+    <!-- Top: título -->
     <div class="top-area">
       <h1>Verde<span>Vegan</span></h1>
     </div>
 
     <div class="card-conta">
 
+      <!-- Cabeçalho com botão voltar -->
       <div class="card-header">
 
         <ion-icon
@@ -19,6 +21,7 @@
         <h2>OS MEUS DADOS</h2>
       </div>
 
+      <!-- Avatar: foto ou ícone padrão, clicável para mudar foto -->
       <div class="avatar" (click)="inputFoto.click()">
 
         <img
@@ -35,6 +38,7 @@
 
       </div>
 
+      <!-- Input file escondido -->
       <input
         type="file"
         accept="image/*"
@@ -43,21 +47,19 @@
         (change)="selecionarFoto($event)"
       />
 
+      <!-- Link clicável para alterar foto -->
       <p class="alterar-foto" (click)="inputFoto.click()">
         Alterar foto
       </p>
 
+      <!-- Dados do utilizador: nome, email, contacto, morada -->
       <h3>{{ utilizador.nome || 'Utilizador' }}</h3>
 
       <p><strong>Email:</strong> {{ utilizador.email }}</p>
       <p><strong>Contacto:</strong> {{ utilizador.contacto }}</p>
       <p><strong>Morada:</strong> {{ utilizador.morada }}</p>
 
-      <div class="notificacoes">
-        <span>Receber notificações</span>
-        <input type="checkbox">
-      </div>
-
+      <!-- Botão para terminar sessão (logout) -->
       <button class="btn-sair" (click)="terminarSessao()">
         Terminar sessão
       </button>

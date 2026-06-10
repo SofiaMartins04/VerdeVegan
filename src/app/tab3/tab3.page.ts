@@ -20,16 +20,24 @@ import { StorageService } from '../services/storage';
     IonIcon
   ]
 })
+
 export class Tab3Page {
 
+  // Controla visibildade e conteúdo do popup (sucesso ou erro)
   mostrarPopup = false;
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
 
+  // Lista de recompensas já resgatadas pelo utilizador
   recompensasDisponiveis: any[] = [];
+
+  // Email do utilizador
   emailAtual: string | null = null;
+
+  // Total de pontos do utilizador
   pontos = 0;
 
+  // Catálogo de recompensas com custo em pontos
   recompensas = [
     { tipo: 'cafe', nome: 'Café grátis', custo: 10 },
     { tipo: 'bebida', nome: 'Bebida grátis', custo: 30 },
@@ -55,6 +63,7 @@ export class Tab3Page {
   }
 
   async ionViewWillEnter() {
+    // Carrega email e depois pontos + recompensas do utilizador
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
     if (!this.emailAtual) {
@@ -67,14 +76,17 @@ export class Tab3Page {
   }
 
   async carregarPontos() {
+    // Lê total de pontos do utilizador do Storage
     this.pontos = Number(await this.storageService.get(this.chavePontos) || 0);
   }
 
   async carregarRecompensas() {
+    // Lê lista de recompensas resgatadas pelo utilizador
     this.recompensasDisponiveis = await this.storageService.get(this.chaveRecompensas) || [];
   }
 
   async resgatarRecompensa(recompensa: any) {
+    // Valida se tem pontos suficientes, depois desconta e guarda a recompensa
     if (this.pontos < recompensa.custo) {
       this.abrirPopup('Não tens pontos suficientes.', 'erro');
       return;
@@ -82,10 +94,12 @@ export class Tab3Page {
 
     const novosPontos = this.pontos - recompensa.custo;
 
+    // Atualiza pontos no Storage
     await this.storageService.set(this.chavePontos, novosPontos);
 
     const recompensasGuardadas = await this.storageService.get(this.chaveRecompensas) || [];
 
+    // Adiciona a recompensa resgatada à lista pessoal
     recompensasGuardadas.push({
       id: Date.now(),
       tipo: recompensa.tipo,
@@ -95,6 +109,7 @@ export class Tab3Page {
 
     await this.storageService.set(this.chaveRecompensas, recompensasGuardadas);
 
+    // Recarrega os dados e mostra feedback
     await this.carregarPontos();
     await this.carregarRecompensas();
 
@@ -106,12 +121,14 @@ export class Tab3Page {
   }
 
   abrirPopup(mensagem: string, tipo: 'sucesso' | 'erro' = 'sucesso') {
+    // Exibe popup com mensagem de feedback
     this.mensagemPopup = mensagem;
     this.tipoPopup = tipo;
     this.mostrarPopup = true;
   }
 
   fecharPopup() {
+    // Fecha o popup
     this.mostrarPopup = false;
   }
 }

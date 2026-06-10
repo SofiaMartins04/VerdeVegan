@@ -23,8 +23,9 @@ import { StorageService } from '../services/storage';
     IonIcon
   ]
 })
+// Página do carrinho: controla os itens do carrinho e o uso de recompensas.
 export class CarrinhoPage {
-
+  // Estado principal da página
   carrinho: any[] = [];
   recompensasDisponiveis: any[] = [];
   emailAtual: string | null = null;
@@ -35,6 +36,9 @@ export class CarrinhoPage {
   mostrarPopup = false;
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
+  modalRemoverAberto = false;
+  indexParaRemover: number | null = null;
+  tipoConfirmacao: 'produto' | 'recompensa' | 'carrinho' = 'produto';
 
   constructor(
     private router: Router,
@@ -54,6 +58,7 @@ export class CarrinhoPage {
     return `recompensas_${this.emailAtual}`;
   }
 
+  // Inicializa o estado quando a página do carrinho aparece.
   async ionViewWillEnter() {
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
@@ -70,6 +75,7 @@ export class CarrinhoPage {
     this.router.navigate(['/tabs/tab1']);
   }
 
+  // Calcula o total do carrinho com base no preço e quantidade.
   get total() {
     return this.carrinho.reduce((soma, item) => {
       const preco = parseFloat(item.preco.replace('€', ''));
@@ -86,6 +92,7 @@ export class CarrinhoPage {
     await this.storageService.set(this.chaveRecompensas, this.recompensasDisponiveis);
   }
 
+  // Prepara a seleção de produto gratuito para a recompensa escolhida.
   async usarRecompensa(recompensa: any) {
     this.recompensaSelecionada = recompensa;
 
@@ -120,6 +127,7 @@ export class CarrinhoPage {
     this.modalRecompensaAberto = true;
   }
 
+  // Adiciona ao carrinho o produto selecionado como recompensa.
   async selecionarProdutoRecompensa(produto: any) {
     this.carrinho.push({
       nome: produto.nome,
@@ -144,6 +152,7 @@ export class CarrinhoPage {
     this.opcoesRecompensa = [];
   }
 
+  // Cancela uma recompensa e devolve os pontos ao utilizador.
   async cancelarRecompensa(index: number) {
     const item = this.carrinho[index];
 
@@ -182,9 +191,58 @@ export class CarrinhoPage {
     this.abrirPopup('Recompensa removida e pontos devolvidos.', 'sucesso');
   }
 
-  async removerProduto(index: number) {
-    this.carrinho.splice(index, 1);
-    await this.guardarCarrinho();
+  abrirConfirmacaoRemover(index: number) {
+    this.indexParaRemover = index;
+    this.tipoConfirmacao = 'produto';
+    this.modalRemoverAberto = true;
+  }
+
+  abrirConfirmacaoRecompensa(index: number) {
+    this.indexParaRemover = index;
+    this.tipoConfirmacao = 'recompensa';
+    this.modalRemoverAberto = true;
+  }
+
+  abrirConfirmacaoLimparCarrinho() {
+    this.tipoConfirmacao = 'carrinho';
+    this.modalRemoverAberto = true;
+  }
+
+  fecharConfirmacaoRemover() {
+    this.indexParaRemover = null;
+    this.modalRemoverAberto = false;
+  }
+
+  // Confirma remoção de item, recompensa ou limpeza do carrinho.
+  async confirmarAcao() {
+
+    if (this.tipoConfirmacao === 'produto') {
+      if (this.indexParaRemover !== null) {
+        this.carrinho.splice(this.indexParaRemover, 1);
+        await this.guardarCarrinho();
+      }
+
+      this.fecharConfirmacaoRemover();
+      this.abrirPopup('Produto removido do carrinho.', 'sucesso');
+      return;
+    }
+
+    if (this.tipoConfirmacao === 'recompensa') {
+      if (this.indexParaRemover !== null) {
+        await this.cancelarRecompensa(this.indexParaRemover);
+      }
+
+      this.fecharConfirmacaoRemover();
+      return;
+    }
+    
+    if (this.tipoConfirmacao === 'carrinho') {
+      await this.limparCarrinho();
+
+      this.fecharConfirmacaoRemover();
+      this.abrirPopup('Carrinho limpo com sucesso.', 'sucesso');
+      return;
+    }
   }
 
   async limparCarrinho() {
@@ -209,14 +267,15 @@ export class CarrinhoPage {
 
   async diminuirQuantidade(index: number) {
     if (this.carrinho[index].recompensa) {
-      await this.removerProduto(index);
+      this.abrirConfirmacaoRecompensa(index);
       return;
     }
 
     if (this.carrinho[index].quantidade > 1) {
       this.carrinho[index].quantidade--;
     } else {
-      this.carrinho.splice(index, 1);
+      this.abrirConfirmacaoRemover(index);
+      return;
     }
 
     await this.guardarCarrinho();

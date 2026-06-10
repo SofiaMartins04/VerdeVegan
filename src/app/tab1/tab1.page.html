@@ -2,6 +2,7 @@
 
   <div class="home-container">
 
+    <!-- Top area: título clicável (limpa filtros) e botão carrinho com badge -->
     <div class="top-area">
       <h1 (click)="limparFiltros()">
         Verde<span>Vegan</span>
@@ -18,6 +19,7 @@
       </button>
     </div>
 
+    <!-- Caixa de pesquisa (2-way binding com `pesquisa`) -->
     <div class="search-box">
       <ion-input
         placeholder="Procure a sua refeição..."
@@ -26,6 +28,7 @@
       <ion-icon name="search-outline"></ion-icon>
     </div>
 
+    <!-- Filtros por categoria (emojis): esconde-se quando há pesquisa ativa -->
     <div class="categorias" *ngIf="pesquisa.trim() === ''">
       <div class="categoria" [class.ativa]="categoriaSelecionada === 'fastfood'" (click)="selecionarCategoria('fastfood')">🥪</div>
       <div class="categoria" [class.ativa]="categoriaSelecionada === 'pratos'" (click)="selecionarCategoria('pratos')">🍽️</div>
@@ -34,6 +37,7 @@
 
     </div>
 
+    <!-- Título dinâmico e botão "Ver destaques" (mostrado se há filtro ativo) -->
     <div class="titulo-linha">
       <h2>{{ tituloLista }}</h2>
 
@@ -45,6 +49,7 @@
       </button>
     </div>
     
+    <!-- Grelha de produtos: cicla sobre produtos filtrados (pesquisa/categoria) -->
     <div class="produtos-grid">
 
       <div class="produto-card" *ngFor="let produto of produtosFiltrados"  (click)="abrirDetalhes(produto)">
@@ -56,6 +61,7 @@
           ⏱ Prep: {{ produto.tempo }}
         </p>
 
+        <!-- Rating gerado dinamicamente por `gerarEstrelas()` -->
         <div class="rating-box">
           <span class="stars">
             {{ gerarEstrelas(produto.rating) }}

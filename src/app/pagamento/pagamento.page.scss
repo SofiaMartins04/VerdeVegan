@@ -129,56 +129,6 @@ h3 {
   color: var(--verdevegan-verde-pontos);
 }
 
-.popup-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.popup-caixa {
-  width: 82%;
-  max-width: 340px;
-  background: var(--verdevegan-branco);
-  border-radius: 22px;
-  padding: 24px;
-  text-align: center;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
-}
-
-.popup-caixa h2 {
-  margin: 0 0 12px;
-  font-size: 22px;
-  font-weight: 800;
-}
-
-.popup-caixa p {
-  color: #333;
-  font-size: 16px;
-  margin: 12px 0 22px;
-}
-
-.popup-caixa.sucesso h2 {
-  color: var(--verdevegan-sucesso);
-}
-
-.popup-caixa.erro h2 {
-  color: var(--verdevegan-erro);
-}
-
-.popup-btn {
-  width: 100%;
-  border: none;
-  border-radius: 14px;
-  padding: 13px;
-  background: var(--verdevegan-sucesso);
-  color: var(--verdevegan-branco);
-  font-weight: 700;
-}
-
 .input-box.input-erro {
   border: 2px solid var(--verdevegan-erro);
   box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.15);

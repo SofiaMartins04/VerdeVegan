@@ -22,27 +22,33 @@ import { StorageService } from '../services/storage';
     IonIcon
   ]
 })
+
 export class PagamentoPage {
 
+  // Dados de entrega (pré-preenchidos a partir do utilizador)
   nome = '';
   morada = '';
   codigoPostal = '';
   localidade = '';
   nif = '';
 
+  // Dados do cartão (simulados — sem validação real de crédito)
   nomeCartao = '';
   numeroCartao = '';
   validade = '';
   cvv = '';
 
+  // Estado da página
   carrinho: any[] = [];
   emailAtual: string | null = null;
 
+  // Popup de feedback
   mostrarPopup = false;
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
   destinoDepoisPopup = '';
 
+  // Flags de validação para cada campo
   erroNome = false;
   erroMorada = false;
   erroCodigoPostal = false;
@@ -53,9 +59,11 @@ export class PagamentoPage {
   erroValidade = false;
   erroCvv = false;
 
+  // Campos de data do cartão (mês e ano)
   mes = '';
   ano = '';
 
+  // Listas de opções para os dropdowns
   meses = [
     '01','02','03','04','05','06',
     '07','08','09','10','11','12'
@@ -85,6 +93,7 @@ export class PagamentoPage {
   }
 
   async ionViewWillEnter() {
+    // Carrega utilizador, carrinho e pré-preenche nome/morada do formulário.
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
     if (!this.emailAtual) {
@@ -117,18 +126,25 @@ export class PagamentoPage {
     this.router.navigate(['/carrinho']);
   }
 
+  // Valida dados do formulário e processa o pagamento (simulado).
+  // Regista o pedido, actualiza pontos e limpa o carrinho.
   async finalizarPagamento() {
-    const regexCodigoPostal = /^\d{4}-\d{3}$/;
-    const regexSoLetras = /^[A-Za-zÀ-ÿ\s]+$/;
-    const regexNif = /^\d{9}$/;
-    const regexNumeroCartao = /^\d{16}$/;
-    const regexCvv = /^\d{3}$/;
+    // Expressos regulares para validação
+    const regexCodigoPostal = /^\d{4}-\d{3}$/;  
+    const regexSoLetras = /^[A-Za-zÀ-ÿ\s]+$/;   
+    const regexNif = /^\d{9}$/;                 
+    const regexNumeroCartao = /^\d{16}$/;       
+    const regexCvv = /^\d{3}$/;                 
 
+    // Validação de cada campo de entrega
     this.erroNome = !this.nome.trim();
     this.erroMorada = !this.morada.trim();
     this.erroCodigoPostal = !regexCodigoPostal.test(this.codigoPostal.trim());
     this.erroLocalidade = !regexSoLetras.test(this.localidade.trim());
+    // NIF é opcional — valida só se preenchido
     this.erroNif = this.nif.trim() !== '' && !regexNif.test(this.nif.trim());
+
+    // Validação dos dados do cartão
     this.erroNomeCartao = !regexSoLetras.test(this.nomeCartao.trim());
     this.erroNumeroCartao = !regexNumeroCartao.test(this.numeroCartao.trim());
     this.erroValidade = !this.mes || !this.ano;

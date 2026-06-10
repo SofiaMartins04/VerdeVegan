@@ -7,9 +7,10 @@
       "categoria": "pratos",
       "pontos": 10,
       "destaque": true,
-      "imagem": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+      "imagem": "assets/images/img1.jpeg",
       "descricao": "Uma opção leve e nutritiva, preparada com arroz de couve-flor, cogumelos salteados e legumes frescos para uma refeição equilibrada.",
       "ingredientes": [
+        "arroz",
         "couve-flor",
         "cogumelos frescos",
         "alho-francês",
@@ -36,7 +37,7 @@
       "categoria": "pratos",
       "pontos": 10,
       "destaque": true,
-      "imagem": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+      "imagem": "assets/images/img2.jpeg",
       "descricao": "Um prato cremoso e reconfortante, com cogumelos e curgete envolvidos num molho vegetal suave e aromático.",
       "ingredientes": [
         "cogumelos",
@@ -67,7 +68,7 @@
       "categoria": "sobremesas",
       "pontos": 5,
       "destaque": true,
-      "imagem": "https://images.unsplash.com/photo-1563805042-7684c019e1cb",
+      "imagem": "assets/images/img3.jpeg",
       "descricao": "Uma sobremesa fresca e doce, combinando gelado vegetal com bolacha Maria triturada para uma textura crocante.",
       "ingredientes": [
         "gelado vegetal de baunilha",
@@ -91,7 +92,7 @@
       "categoria": "pratos",
       "pontos": 10,
       "destaque": true,
-      "imagem": "https://images.unsplash.com/photo-1529059997568-3d847b1154f0",
+      "imagem": "assets/images/img4.jpeg",
       "descricao": "Cuscuz leve e colorido, preparado com legumes salteados e temperos mediterrânicos para uma refeição simples e saborosa.",
       "ingredientes": [
         "cuscuz",
@@ -106,8 +107,6 @@
         "sal"
       ],
       "ingredientesPersonalizaveis": [
-        "pimento vermelho",
-        "pimento amarelo",
         "curgete",
         "cenoura",
         "grão-de-bico",
@@ -123,7 +122,7 @@
       "categoria": "pratos",
       "pontos": 10,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1596797038530-2c107229654b",
+      "imagem": "assets/images/img5.jpeg",
       "descricao": "Um prato quente e completo, feito no forno com arroz, legumes e uma cobertura ligeiramente gratinada.",
       "ingredientes": [
         "arroz",
@@ -138,12 +137,8 @@
         "azeite"
       ],
       "ingredientesPersonalizaveis": [
-        "cenoura",
-        "ervilhas",
         "milho",
-        "cogumelos",
         "tomate",
-        "cebola",
         "queijo vegetal ralado"
       ]
     },
@@ -155,7 +150,7 @@
       "categoria": "pratos",
       "pontos": 10,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1603133872878-684f208fb84b",
+      "imagem": "assets/images/img6.jpeg",
       "descricao": "Arroz salteado com legumes crocantes e molho de soja, ideal para uma refeição rápida e cheia de sabor.",
       "ingredientes": [
         "arroz basmati",
@@ -170,11 +165,11 @@
         "gengibre"
       ],
       "ingredientesPersonalizaveis": [
-        "cenoura",
         "ervilhas",
         "milho",
         "pimento",
         "cebolinho",
+        "gengibre",
         "molho de soja"
       ]
     },
@@ -186,7 +181,7 @@
       "categoria": "fastfood",
       "pontos": 10,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1520072959219-c595dc870360",
+      "imagem": "assets/images/img7.jpeg",
       "descricao": "Hambúrguer vegan suculento, servido em pão macio com vegetais frescos e molho especial da casa.",
       "ingredientes": [
         "pão de hambúrguer",
@@ -215,7 +210,7 @@
       "categoria": "fastfood",
       "pontos": 10,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af",
+      "imagem": "assets/images/img8.jpeg",
       "descricao": "Tosta crocante e simples, recheada com queijo vegetal, tomate e ervas aromáticas.",
       "ingredientes": [
         "pão de forma",
@@ -242,7 +237,7 @@
       "categoria": "sobremesas",
       "pontos": 5,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c",
+      "imagem": "assets/images/img9.jpeg",
       "descricao": "Brownie vegan intenso e húmido, feito com cacau e chocolate negro, perfeito para amantes de sobremesas.",
       "ingredientes": [
         "farinha",
@@ -267,7 +262,7 @@
       "categoria": "sobremesas",
       "pontos": 5,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1528207776546-365bb710ee93",
+      "imagem": "assets/images/img10.jpeg",
       "descricao": "Panquecas fofas feitas sem produtos de origem animal, servidas com fruta fresca e topping doce.",
       "ingredientes": [
         "farinha de aveia",
@@ -292,7 +287,7 @@
       "categoria": "extras",
       "pontos": 5,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1600271886742-f049cd451bba",
+      "imagem": "assets/images/img11.jpeg",
       "descricao": "Sumo natural preparado na hora com laranjas frescas, ideal para acompanhar qualquer refeição.",
       "ingredientes": [
         "laranja",
@@ -310,7 +305,7 @@
       "categoria": "extras",
       "pontos": 5,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e",
+      "imagem": "assets/images/img12.jpeg",
       "descricao": "Bebida fresca e leve, preparada com limão, água e hortelã.",
       "ingredientes": [
         "limão",
@@ -331,13 +326,17 @@
       "categoria": "extras",
       "pontos": 2,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd",
+      "imagem": "assets/images/img13.jpeg",
       "descricao": "Café expresso intenso e aromático, perfeito para terminar a refeição.",
       "ingredientes": [
-        "café"
+        "café",
+        "açucar"
       ],
-      "ingredientesPersonalizaveis": []
+      "ingredientesPersonalizaveis": [
+        "açucar"
+      ]
     },
+    
     {
       "nome": "Cappuccino vegetal",
       "preco": "2.50€",
@@ -346,7 +345,7 @@
       "categoria": "extras",
       "pontos": 2,
       "destaque": false,
-      "imagem": "https://images.unsplash.com/photo-1534778101976-62847782c213",
+      "imagem": "assets/images/img14.jpeg",
       "descricao": "Cappuccino suave preparado com bebida vegetal e café aromático.",
       "ingredientes": [
         "café",

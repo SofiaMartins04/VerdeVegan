@@ -21,6 +21,8 @@ import { ProdutosService } from '../services/produtos';
     IonIcon
   ]
 })
+// Página de detalhe do produto: mostra informação, permite personalização
+// e adiciona o item ao carrinho (gestão de ingredientes e contador).
 export class DetalheMenuPage {
 
   produto: any;
@@ -45,6 +47,7 @@ export class DetalheMenuPage {
     });
   }
 
+  // Inicializa o produto atual e actualiza o contador do carrinho.
   async ionViewWillEnter() {
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
@@ -67,6 +70,7 @@ export class DetalheMenuPage {
     this.router.navigate(['/tabs/tab1']);
   }
 
+  // Converte o rating (ex: 4.5) numa lista de estrelas para o template.
   gerarEstrelasArray(rating: number): string[] {
     const cheias = Math.floor(rating);
     const vazias = 5 - cheias;
@@ -77,7 +81,12 @@ export class DetalheMenuPage {
     ];
   }
 
+  // Abre modal para escolher/remover ingredientes personalizáveis.
   abrirModalIngredientes() {
+    this.ingredientesSelecionados = [
+      ...this.produto.ingredientesPersonalizaveis
+    ];
+
     this.modalIngredientesAberto = true;
   }
 
@@ -100,10 +109,11 @@ export class DetalheMenuPage {
     }
   }
 
-  guardarIngredientes() {
+  async adicionarAoCarrinhoPersonalizado() {
     this.modalIngredientesAberto = false;
-    this.abrirPopup('Ingredientes atualizados.', 'sucesso');
+    await this.adicionarAoCarrinho();
   }
+
 
   get ingredientesRemovidos() {
     if (!this.produto) {
@@ -116,6 +126,8 @@ export class DetalheMenuPage {
     );
   }
 
+  // Adiciona o produto ao carrinho guardado no Storage.
+  // Compara ingredientes removidos para juntar à mesma entrada se existir.
   async adicionarAoCarrinho() {
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
@@ -164,6 +176,7 @@ export class DetalheMenuPage {
     this.abrirPopup('Produto adicionado ao carrinho.', 'sucesso');
   }
 
+  // Atualiza o número total de itens no badge do carrinho.
   async atualizarQuantidadeCarrinho() {
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
@@ -184,12 +197,14 @@ export class DetalheMenuPage {
     this.router.navigate(['/carrinho']);
   }
 
+  // Mostra um popup de feedback (sucesso/erro) ao utilizador.
   abrirPopup(mensagem: string, tipo: 'sucesso' | 'erro' = 'sucesso') {
     this.mensagemPopup = mensagem;
     this.tipoPopup = tipo;
     this.mostrarPopup = true;
   }
 
+  // Fecha o popup; redireciona para login se a mensagem indicar necessidade.
   fecharPopup() {
     this.mostrarPopup = false;
 

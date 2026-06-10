@@ -8,6 +8,7 @@
 
     <div class="card-pedidos">
 
+      <!-- Cabeçalho: botão voltar e título -->
       <div class="header-pedidos">
 
         <ion-icon
@@ -20,10 +21,12 @@
 
       </div>
 
+      <!-- Secção de pedidos ativos: mostrar se existem, senão mensagem vazia -->
       <div *ngIf="pedidosAtivos.length > 0">
 
         <div class="pedido" *ngFor="let pedido of pedidosAtivos">
 
+          <!-- Detalhe de cada item do pedido (nome, quantidade, preço, mudanças) -->
           <div class="item-pedido" *ngFor="let item of pedido.itens">
 
             <h3>{{ item.nome }}</h3>
@@ -36,6 +39,7 @@
               {{ item.preco }}
             </p>
 
+            <!-- Mostra ingredientes removidos se houver -->
             <div
               class="mudancas"
               *ngIf="item.ingredientesRemovidos?.length > 0">
@@ -54,11 +58,13 @@
 
           </div>
 
+          <!-- Total do pedido -->
           <div class="total-pedido">
             TOTAL:
             <span>{{ pedido.total.toFixed(2) }}€</span>
           </div>
 
+          <!-- Estado e botão para marcar como entregue -->
           <p class="estado">{{ pedido.estado }}, 5 minutos de distância</p>
 
           <button
@@ -75,12 +81,14 @@
         Sem pedidos ativos
       </div>
 
+      <!-- Secção de histórico de pedidos (últimos 4) -->
       <h2 class="titulo-historico">Histórico de pedidos</h2>
 
       <div *ngIf="historicoPedidos.length > 0">
 
         <div class="pedido historico" *ngFor="let pedido of historicoPedidos">
 
+          <!-- Detalhe dos itens do histórico -->
           <div class="item-pedido" *ngFor="let item of pedido.itens">
 
             <h3>{{ item.nome }}</h3>
@@ -111,11 +119,13 @@
 
           </div>
 
+          <!-- Total do pedido histórico -->
           <div class="total-pedido">
             TOTAL:
             <span>{{ pedido.total.toFixed(2) }}€</span>
           </div>
 
+          <!-- Marca como entregue (estado imutável no histórico) -->
           <p class="estado entregue">Entregue</p>
 
         </div>

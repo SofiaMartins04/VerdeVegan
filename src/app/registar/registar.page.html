@@ -4,6 +4,7 @@
 
     <h1>Registar Conta</h1>
 
+    <!-- Campos do formulário de registo (validados no TS) -->
     <!-- Nome -->
     <div class="input-box" [ngClass]="{ 'input-erro': erroNome }">
       <ion-icon name="person-outline"></ion-icon>
@@ -56,6 +57,7 @@
         [(ngModel)]="password"
       />
 
+      <!-- Alterna visibilidade da password -->
       <ion-icon
         [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'"
         class="olho"

@@ -20,9 +20,13 @@ import { StorageService } from '../services/storage';
     IonIcon
   ],
 })
+
 export class Tab2Page {
 
+  // Lista de todos os pedidos do utilizador
   pedidos: any[] = [];
+
+  // Email do utilizador logado (para recuperar pedidos pessoais)
   emailAtual: string | null = null;
 
   constructor(
@@ -39,6 +43,7 @@ export class Tab2Page {
   }
 
   async ionViewWillEnter() {
+    // Carrega email do utilizador e recupera os pedidos do Storage
     this.emailAtual = await this.storageService.get('utilizadorAtual');
 
     if (!this.emailAtual) {
@@ -50,13 +55,16 @@ export class Tab2Page {
   }
 
   async carregarPedidos() {
+    // Lê lista de pedidos guardados para este utilizador
     this.pedidos = await this.storageService.get(this.chavePedidos) || [];
   }
 
+  // Filtra pedidos não entregues (em preparação, a caminho, etc.)
   get pedidosAtivos() {
     return this.pedidos.filter(pedido => pedido.estado !== 'Entregue');
   }
 
+  // Filtra últimos 4 pedidos entregues (histórico reverso)
   get historicoPedidos() {
     return this.pedidos
       .filter(pedido => pedido.estado === 'Entregue')
@@ -64,6 +72,7 @@ export class Tab2Page {
       .reverse();
   }
 
+  // Marca um pedido como entregue e guarda a mudança
   async marcarComoEntregue(id: number) {
     const index = this.pedidos.findIndex(pedido => pedido.id === id);
 
@@ -76,6 +85,7 @@ export class Tab2Page {
     }
   }
 
+  // Calcula o número total de artigos num pedido
   totalArtigos(pedido: any) {
     return pedido.itens.reduce((total: number, item: any) => {
       return total + item.quantidade;

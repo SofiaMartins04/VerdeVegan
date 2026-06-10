@@ -2,6 +2,7 @@
   
   <div class="detalhe-container">
 
+    <!-- Top area: título da app e botão do carrinho (badge mostra quantidade) -->
     <div class="top-area">
       <h1>Verde<span>Vegan</span></h1>
 
@@ -19,13 +20,15 @@
 
     <div class="card">
 
+      <!-- Ícone voltar: chama `voltar()` no componente -->
       <ion-icon
         name="arrow-back-outline"
         class="back-icon"
         (click)="voltar()">
       </ion-icon>
 
-    <div class="imagem-container">
+      <!-- Imagem e rating do produto (rating gerado por `gerarEstrelasArray`) -->
+      <div class="imagem-container">
 
       <div class="rating-vertical">
 
@@ -47,26 +50,31 @@
         alt="Prato">
     </div>
 
+      <!-- Título e preço do produto -->
       <div class="titulo-preco">
         <h2>{{ produto.nome }}</h2>
         <span>{{ produto.preco }}</span>
       </div>
 
+      <!-- Tempo de preparação e pontos ganhos pelo pedido -->
       <div class="info-linha">
         <p>⏱ Prep: {{ produto.tempo }}</p>
         <p>☆ {{ produto.pontos }} pontos</p>
       </div>
 
+      <!-- Descrição do prato -->
       <p class="descricao">
         {{ produto.descricao }}
       </p>
 
+      <!-- Lista de ingredientes do prato -->
       <ul>
         <li *ngFor="let ingrediente of produto.ingredientes">
           {{ ingrediente }}
         </li>
       </ul>
 
+      <!-- Ações: abrir modal de personalização e adicionar ao carrinho -->
       <button class="btn-preto" (click)="abrirModalIngredientes()">
         Mudar Ingredientes
       </button>
@@ -80,6 +88,7 @@
   </div>
 
 
+  <!-- Modal de personalização: permite desmarcar ingredientes e adicionar versão personalizada -->
   <div class="modal-overlay" *ngIf="modalIngredientesAberto">
 
     <div class="modal-card">
@@ -99,13 +108,18 @@
 
       </div>
 
-      <button class="btn-guardar" (click)="guardarIngredientes()">
-        Guardar ingredientes
+      <button class="btn-guardar" (click)="adicionarAoCarrinhoPersonalizado()">
+        Adicionar ao carrinho
+      </button>
+
+      <button class="btn-cancelar" (click)="fecharModalIngredientes()">
+        Cancelar
       </button>
 
     </div>
 
   </div>
+    <!-- Popup de feedback (sucesso / erro) usado por várias ações da página -->
     <div class="popup-backdrop" *ngIf="mostrarPopup">
     <div class="popup-caixa" [ngClass]="tipoPopup">
       <h2>{{ tipoPopup === 'sucesso' ? 'Sucesso' : 'Erro' }}</h2>

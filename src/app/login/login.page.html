@@ -4,6 +4,7 @@
 
     <h1>Login</h1>
 
+    <!-- Formulário de login: email, password e botão Entrar -->
     <div class="form-area">
 
       <ion-item lines="none" class="input-box">
@@ -21,6 +22,7 @@
           [(ngModel)]="password">
         </ion-input>
 
+        <!-- Alterna visibilidade da password -->
         <ion-icon
           [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'"
           slot="end"
@@ -41,7 +43,7 @@
     </div>
 
   </div>
-
+  
   <div class="popup-backdrop" *ngIf="mostrarPopup">
     <div class="popup-caixa" [ngClass]="tipoPopup">
       <h2>{{ tipoPopup === 'sucesso' ? 'Sucesso' : 'Erro' }}</h2>

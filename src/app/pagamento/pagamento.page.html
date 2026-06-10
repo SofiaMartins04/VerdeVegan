@@ -2,12 +2,14 @@
 
   <div class="pagamento-container">
 
+    <!-- Top: título -->
     <div class="top-area">
       <h1>Verde<span>Vegan</span></h1>
     </div>
 
     <div class="card-pagamento">
 
+      <!-- Cabeçalho: voltar chama `voltar()` -->
       <div class="header-pagamento">
         <ion-icon
           name="arrow-back-outline"
@@ -20,6 +22,7 @@
 
       <h3>Dados de Entrega</h3>
 
+      <!-- Campos de morada e identificação do cliente -->
       <div class="input-box" [ngClass]="{ 'input-erro': erroNome }">
         <input
           type="text"
@@ -58,6 +61,7 @@
           [(ngModel)]="nif">
       </div>
 
+      <!-- Secção de dados do cartão (simulação) -->
       <div class="icone-cartao">
         <ion-icon name="card-outline"></ion-icon>
       </div>
@@ -106,6 +110,7 @@
         </div>
       </div>
 
+      <!-- Finaliza a encomenda: valida e regista o pedido -->
       <button class="btn-preto" (click)="finalizarPagamento()">
         Finalizar pagamento
       </button>

@@ -20,20 +20,25 @@ import { StorageService } from '../services/storage';
     IonIcon
   ]
 })
+// Página de registo: valida campos, cria conta e guarda em Storage.
 export class RegistarPage {
 
+  // Dados do formulário (campos que o utilizador preenche)
   nome = '';
   email = '';
   contacto = '';
   morada = '';
   password = '';
 
+  // Controla se a password é visível (UI)
   mostrarPassword = false;
 
+  // Popup de feedback exibido após ações importantes
   mostrarPopup = false;
   mensagemPopup = '';
   tipoPopup: 'sucesso' | 'erro' = 'sucesso';
 
+  // Flags de validação — true indica erro no respetivo campo
   erroNome = false;
   erroEmail = false;
   erroContacto = false;
@@ -49,17 +54,23 @@ export class RegistarPage {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
+  // Valida inputs e cria um novo utilizador no Storage se estiver tudo OK.
   async registar() {
+    // Nome obrigatório (não vazio)
     this.erroNome = !this.nome.trim();
 
+    // Email: formato básico (ex: user@dominio.com)
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     this.erroEmail = !regexEmail.test(this.email.trim());
 
+    // Telefone: formato nacional com 9 dígitos a começar por 9
     const regexTelefone = /^9\d{8}$/;
     this.erroContacto = !regexTelefone.test(this.contacto.trim());
 
+    // Morada obrigatória
     this.erroMorada = !this.morada.trim();
 
+    // Password mínima de 6 caracteres
     this.erroPassword = this.password.length < 6;
 
     if (
@@ -72,10 +83,13 @@ export class RegistarPage {
       return;
     }
 
+    // Lê lista atual de utilizadores do Storage
     const utilizadores = await this.storageService.get('utilizadores') || [];
 
+    // Normaliza email para comparação (case-insensitive)
     const emailNormalizado = this.email.trim().toLowerCase();
 
+    // Verifica se já existe conta com este email
     const existe = utilizadores.some(
       (u: any) => u.email === emailNormalizado
     );
@@ -85,6 +99,7 @@ export class RegistarPage {
       return;
     }
 
+    // Prepara objeto do novo utilizador
     const utilizador = {
       nome: this.nome,
       email: emailNormalizado,
@@ -94,6 +109,7 @@ export class RegistarPage {
       fotoPerfil: ''
     };
 
+    // Adiciona à lista e grava no Storage
     utilizadores.push(utilizador);
 
     await this.storageService.set('utilizadores', utilizadores);

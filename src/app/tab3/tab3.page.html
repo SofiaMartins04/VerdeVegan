@@ -2,12 +2,14 @@
 
   <div class="pontos-container">
 
+    <!-- Top: título -->
     <div class="top-area">
       <h1>Verde<span>Vegan</span></h1>
     </div>
 
     <div class="card-pontos">
 
+      <!-- Cabeçalho com botão voltar -->
       <div class="header-pontos">
         <ion-icon
           name="arrow-back-outline"
@@ -17,6 +19,7 @@
         <h2>OS MEUS PONTOS</h2>
       </div>
 
+      <!-- Exibe total de pontos do utilizador -->
       <div class="pontos-total">
         {{ pontos }}
       </div>
@@ -25,6 +28,7 @@
         pontos acumulados
       </p>
 
+      <!-- Informação: como ganhar pontos em cada categoria -->
       <h3>Como ganhar pontos</h3>
 
       <div class="lista-pontos">
@@ -34,16 +38,19 @@
         <p>☕ Café = 2 pontos</p>
       </div>
 
+      <!-- Secção de recompensas resgatáveis -->
       <h3>Recompensas</h3>
 
       <div class="recompensas-grid">
 
+        <!-- Card de cada recompensa: disponível se pontos >= custo -->
         <div
           class="recompensa-card"
           *ngFor="let recompensa of recompensas"
           [class.disponivel]="pontos >= recompensa.custo"
           (click)="pontos >= recompensa.custo && resgatarRecompensa(recompensa)">
 
+          <!-- Emoji representativo da recompensa -->
           <div class="recompensa-icon">
             <span *ngIf="recompensa.tipo === 'cafe'">☕</span>
             <span *ngIf="recompensa.tipo === 'bebida'">🥤</span>
@@ -58,6 +65,7 @@
 
       </div>
 
+      <!-- Secção de recompensas já resgatadas -->
       <h3>Recompensas disponíveis</h3>
 
       <div
@@ -78,6 +86,7 @@
 
   </div>
 
+  <!-- Popup para feedback (sucesso/erro) -->
   <div class="popup-backdrop" *ngIf="mostrarPopup">
     <div class="popup-caixa" [ngClass]="tipoPopup">
       <h2>{{ tipoPopup === 'sucesso' ? 'Sucesso' : 'Erro' }}</h2>
